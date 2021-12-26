@@ -1,0 +1,36 @@
+{
+    "name": "ecommerce-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc --project ./",
+        "start": "ts-node ./src/server.ts",
+        "start:prod": "npm run build && node ./dist/src/server.js",
+        "start:nodemon": "./node_modules/nodemon/bin/nodemon.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/berk2s/ecommerce-backend.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/berk2s/ecommerce-backend/issues"
+    },
+    "homepage": "https://github.com/berk2s/ecommerce-backend#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql": "^2.18.1",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.41"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^17.0.5",
+        "nodemon": "^2.0.15",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.4"
+    }
+}
