@@ -25,9 +25,19 @@ class Routes {
     // TODO: implement middleware to routes
 
     app
+
       .route('/products')
+      /**
+       * @openapi
+       * /products:
+       *  post:
+       *    description: Create new product
+       *    responses:
+       *      '200':
+       *        description: Product created successfully
+       */
       .post(this.productController.saveProduct)
-      .get(this.productController.getProducts,)
+      .get(this.productController.getProducts)
 
     app
       .route('/products/:id')
