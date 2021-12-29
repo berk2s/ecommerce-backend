@@ -5,7 +5,6 @@ import { TokenUtility } from "../utilities/TokenUtility";
 
 export type NextHandleFunction = (req: IncomingMessage, res: Response, next: NextFunction) => void;
 
-
 /**
  * Checks if given bearer token is valid or not
  * @param req contains information about request
