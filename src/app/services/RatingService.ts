@@ -1,0 +1,1 @@
+// array olarak gelen review ve rating değerleri burada manipulate edilecek.

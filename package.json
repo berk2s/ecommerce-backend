@@ -1,0 +1,44 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc --project ./",
+    "start": "npm run migrate && ts-node ./src/server.ts",
+    "start:prod": "npm run build && node ./dist/src/server.js",
+    "start:nodemon": "./node_modules/nodemon/bin/nodemon.js",
+    "migrate": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berk2s/ecommerce-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/berk2s/ecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/berk2s/ecommerce-backend#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwk-to-pem": "^2.0.5",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.41"
+  },
+  "node": {
+    "--experimental-modules": true
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/jwk-to-pem": "^2.0.1",
+    "@types/node": "^17.0.5",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}
