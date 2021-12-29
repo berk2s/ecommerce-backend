@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
-import { CreateCategoryDto, UpdateCategoryDto } from '../models/Category'
-import { CategoryService } from '../services/CategoryService'
+import { Request, Response } from "express";
+import { CreateCategoryDto, UpdateCategoryDto } from "../models/Category";
+import { CategoryService } from "../services/CategoryService";
 
 class CategoryController {
   /**
@@ -10,13 +10,13 @@ class CategoryController {
    * @returns Arrays of Category
    */
   public async getCategoryById(req: Request, res: Response) {
-    const categoryService = new CategoryService()
+    const categoryService = new CategoryService();
 
-    const categoryId = req.params.id as unknown as number
+    const categoryId = req.params.id as unknown as number;
 
-    const category = await categoryService.getCategoryById(categoryId)
+    const category = await categoryService.getCategoryById(categoryId);
 
-    res.json(category)
+    res.json(category);
   }
 
   /**
@@ -26,20 +26,30 @@ class CategoryController {
    * @returns Category[]
    */
   public async saveCategory(req: Request, res: Response) {
-    const categoryService = new CategoryService()
-    const createCategoryDto: CreateCategoryDto = req.body
+    const categoryService = new CategoryService();
+    const createCategoryDto: CreateCategoryDto = req.body;
 
-    const savedCategory = await categoryService.createCategory(createCategoryDto)
+    const savedCategory = await categoryService.createCategory(
+      createCategoryDto
+    );
 
-    res.status(201).json(savedCategory)
+    if (!createCategoryDto.parents) {
+      res.status(400).json({ message: "Categories are required" });
+    }
+
+    if (!savedCategory) {
+      res.status(400).json();
+    }
+
+    res.status(201).json(savedCategory);
   }
 
   public async getCategories(req: Request, res: Response) {
-    const categoryService = new CategoryService()
+    const categoryService = new CategoryService();
 
-    const categories = await categoryService.getCategories()
+    const categories = await categoryService.getCategories();
 
-    res.json(categories)
+    res.json(categories);
   }
 
   /**
@@ -49,26 +59,26 @@ class CategoryController {
    * @returns Category[]
    */
   public async deleteCategory(req: Request, res: Response) {
-    const categoryService = new CategoryService()
-    const categoryId = req.params.id as unknown as number
+    const categoryService = new CategoryService();
+    const categoryId = req.params.id as unknown as number;
 
-    await categoryService.deleteCategory(categoryId)
+    await categoryService.deleteCategory(categoryId);
 
-    res.status(204).json()
+    res.status(204).json();
   }
 
   public async updateCategory(req: Request, res: Response) {
-    const categoryService = new CategoryService()
-    const updateCategoryDto: UpdateCategoryDto = req.body
-    const categoryId = req.params.id as unknown as number
+    const categoryService = new CategoryService();
+    const updateCategoryDto: UpdateCategoryDto = req.body;
+    const categoryId = req.params.id as unknown as number;
 
     const updatedCategory = await categoryService.updateCategory(
       categoryId,
       updateCategoryDto
-    )
+    );
 
-    res.json(updatedCategory)
+    res.json(updatedCategory);
   }
 }
 
-export { CategoryController }
+export { CategoryController };
