@@ -1,13 +1,14 @@
 export interface CurrencyDto {
+  id: number;
   price: {
-    id: number
-  }[]
-  currencyName: string
+    id: number;
+  }[];
+  currencyName: string;
 }
 
 export interface CreateCurrencyDto {
-  price: number[]
-  currencyName: string
+  price: number[];
+  currencyName: string;
 }
 // ->
 // prices: {
@@ -15,6 +16,7 @@ export interface CreateCurrencyDto {
 //   }[]
 
 export interface UpdateCurrencyDto {
-  currencyName: string
-  price: number[]
+  currencyName?: string;
+  addedPrices?: number[];
+  deletedPrices?: number[];
 }

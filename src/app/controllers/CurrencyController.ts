@@ -38,7 +38,7 @@ class CurrencyController {
       currencyId,
       currencyDto
     )
-
+      
     res.json(updatedCurrency)
   }
 }

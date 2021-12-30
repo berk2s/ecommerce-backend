@@ -1,5 +1,5 @@
 export interface PriceDto {
-  price: number
-  productId: number
-  currencyId: number
+  price: number;
+  productId: number;
+  currencyId: number;
 }

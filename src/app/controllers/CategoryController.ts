@@ -49,6 +49,7 @@ class CategoryController {
 
     const categories = await categoryService.getCategories();
 
+    console.log(req);
     res.json(categories);
   }
 
