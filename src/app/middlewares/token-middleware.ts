@@ -53,9 +53,11 @@ export const tokenMiddleware: NextHandleFunction = (
       (scope) => scope.url === url && scope.method === method
     )[0];
 
-    console.log("scopeURL", scopeOfUrl);
+    // console.log("scopeURL", scopeOfUrl);
 
     const scopesOfUser = payload.scopes;
+
+    console.log("payload", payload);
 
     // scopes[0] = read:products gibi geliyor
     if (!scopesOfUser.includes(scopeOfUrl.scopes[0])) {
