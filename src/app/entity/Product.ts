@@ -35,10 +35,10 @@ export class Product {
   @Column({nullable: true})
   status: string
 
-  @OneToMany(() => Rating, (Rating) => Rating.userRatings)
+  @OneToMany(() => Rating, (Rating) => Rating.userRating)
   userRatings: Rating[]
 
-  @OneToMany(() => Rating, (Rating) => Rating.userReviews)
+  @OneToMany(() => Rating, (Rating) => Rating.userReview)
   userReviews: Text[]
 
   @CreateDateColumn()

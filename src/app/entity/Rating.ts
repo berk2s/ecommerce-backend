@@ -18,14 +18,14 @@ export class Rating {
   @PrimaryGeneratedColumn()
   id: number
 
-  @ManyToOne(() => Product, (product) => product.id)
-  productID: Product
-
-  @ManyToOne(() => Product, (product) => product.userRatings)
-  userRatings: number
-
   @ManyToOne(() => Product, (product) => product.userReviews)
-  userReviews: string
+  product: Product
+
+  //@ManyToOne(() => Product, (product) => product.userRatings)
+  userRating: number
+
+  //@ManyToOne(() => Product, (product) => product.userReviews)
+  userReview: string
 
   @CreateDateColumn()
   createdAt: Timestamp
