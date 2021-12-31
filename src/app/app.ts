@@ -8,6 +8,7 @@ import swaggerJsDoc from "swagger-jsdoc";
 
 const swaggerOptions = {
   swaggerDefinition: {
+    openapi: "3.0.0",
     info: {
       title: "Rocket TEAM API",
       description: "Rocket TEAM API Information",

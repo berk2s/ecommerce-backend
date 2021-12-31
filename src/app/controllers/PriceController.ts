@@ -6,7 +6,7 @@ class PriceController {
 
     const prices = await priceService.getPrices()
 
-    res.json(prices)
+    // res.json(prices)
   }
 }
 

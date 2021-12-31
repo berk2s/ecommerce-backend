@@ -10,7 +10,7 @@ class ProductController {
 
     const newProduct = await productService.createProduct(createProductDto);
 
-    res.json(newProduct);
+    res.status(201).json(newProduct);
   }
 
   public async getProducts(req: Request, res: Response) {

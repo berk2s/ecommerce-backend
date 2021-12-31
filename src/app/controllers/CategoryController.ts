@@ -23,7 +23,7 @@ class CategoryController {
    *
    * @param req request
    * @param res response
-   * @returns Category[]
+   * @returns the new category
    */
   public async saveCategory(req: Request, res: Response) {
     const categoryService = new CategoryService();
@@ -44,6 +44,12 @@ class CategoryController {
     res.status(201).json(savedCategory);
   }
 
+  /**
+   *
+   * @param req request
+   * @param res response
+   * @returns all categories
+   */
   public async getCategories(req: Request, res: Response) {
     const categoryService = new CategoryService();
 
@@ -54,10 +60,9 @@ class CategoryController {
   }
 
   /**
-   *
+   * Delete a category
    * @param req request
    * @param res response
-   * @returns Category[]
    */
   public async deleteCategory(req: Request, res: Response) {
     const categoryService = new CategoryService();
@@ -67,6 +72,13 @@ class CategoryController {
 
     res.status(204).json();
   }
+
+  /**
+   *
+   * @param req request
+   * @param res response
+   * @returns updated category object
+   */
 
   public async updateCategory(req: Request, res: Response) {
     const categoryService = new CategoryService();

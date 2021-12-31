@@ -10,6 +10,13 @@ class CurrencyController {
     res.json(currencies);
   }
 
+  /**
+   *
+   * @param req request
+   * @param res response
+   * @returns the new currency
+   */
+
   public async saveCurrency(req: Request, res: Response) {
     const currencyService = new CurrencyService();
 
