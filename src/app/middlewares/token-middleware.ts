@@ -21,7 +21,7 @@ export const tokenMiddleware: NextHandleFunction = (
   res: Response,
   next: NextFunction
 ): void => {
-  console.log(req);
+
   const tokenHeader = req.headers["authorization"];
 
   if (!tokenHeader || !tokenHeader.startsWith("Bearer ")) {

@@ -25,10 +25,10 @@ class Routes {
     // TODO: implement middleware to routes
 
     app
-      .route("/products")
+      .route("/api/v1/products")
       /**
        * @swagger
-       * /products:
+       * /api/v1/products:
        *   post:
        *     summary: Create a Product
        *     tags:
@@ -56,7 +56,7 @@ class Routes {
 
       /**
        * @swagger
-       * /products:
+       * /api/v1/products:
        *   get:
        *     summary: Retrieve a list of products
        *     description: Retrieve a list of products.
@@ -81,7 +81,7 @@ class Routes {
        *                         example: 1
        *                       productName:
        *                         type: string
-       *                         description: The user's name.
+       *                         description: The product's name.
        *                         example: Samsung Galaxy S10
        *                       description:
        *                        type: string
@@ -96,10 +96,10 @@ class Routes {
       .get(this.productController.getProducts);
 
     app
-      .route("/products/:id")
+      .route("/api/v1/products/:id")
       /**
        * @swagger
-       * /products/{id}:
+       * /api/v1/products/{id}:
        *   get:
        *     summary: Retrieve a single product.
        *     description: Retrieve a single product
@@ -142,10 +142,10 @@ class Routes {
 
       /**
        * @swagger
-       * /products/{id}:
+       * /api/v1/products/{id}:
        *   delete:
-       *     summary: Retrieve a single product.
-       *     description: Retrieve a single product
+       *     summary: Delete a single product.
+       *     description: Delete a single product
        *     tags:
        *      - Products
        *     parameters:
@@ -160,7 +160,7 @@ class Routes {
 
       /**
        * @swagger
-       * /products/{id}:
+       * /api/v1/products/{id}:
        *   put:
        *     summary: Update a Product
        *     tags:
@@ -187,25 +187,310 @@ class Routes {
       .put(this.productController.updateProduct);
 
     app
-      .route("/categories/:id")
-      .get(this.categoryController.getCategoryById)
-      .delete(this.categoryController.deleteCategory)
-      .post(this.categoryController.updateCategory);
-
-    app
-      .route("/categories")
+      .route("/api/v1/categories")
+      /**
+       * @swagger
+       * /api/v1/categories:
+       *   post:
+       *     summary: Create a Category
+       *     tags:
+       *      - Categories
+       *     responses:
+       *       201:
+       *         description: Category created successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               id:
+       *                type: integer
+       *                description: The category id.
+       *                example: 1
+       *               categoryName:
+       *                 type: string
+       *                 description: The category's name.
+       *                 example: Television
+       *               parents:
+       *                 type: array
+       *                 description: category id
+       *                 example: [1,2]
+       */
       .post(this.categoryController.saveCategory)
+      /**
+       * @swagger
+       * /api/v1/categories:
+       *   get:
+       *     summary: Retrieve a list of categories
+       *     description: Retrieve a list of categories.
+       *     tags:
+       *      - Categories
+       *     responses:
+       *       200:
+       *         description: A list of categories.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: array
+       *                   items:
+       *                     type: object
+       *                     properties:
+       *                       id:
+       *                         type: integer
+       *                         description: The category ID.
+       *                         example: 1
+       *                       categoryName:
+       *                         type: string
+       *                         description: The category's name.
+       *                         example: Television
+       *                       parents:
+       *                         type: array
+       *                         description: The category's parents.
+       *                         example: []
+       *
+       */
       .get(this.categoryController.getCategories);
 
     app
-      .route("/currencies")
+      .route("/api/v1/categories/:id")
+      /**
+       * @swagger
+       * /api/v1/categories/{id}:
+       *   get:
+       *     summary: Retrieve a single category.
+       *     description: Retrieve a single category
+       *     tags:
+       *      - Categories
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: A single category.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: object
+       *                   properties:
+       *                     id:
+       *                       type: integer
+       *                       description: The product ID.
+       *                       example: 0
+       *                     categoryName:
+       *                       type: string
+       *                       description: The product's name.
+       *                       example: Arçelik
+       *                     parents:
+       *                      type: array
+       *                      description: The product's parents.
+       *                      example: []
+       */
+      .get(this.categoryController.getCategoryById)
+      /**
+       * @swagger
+       * /api/v1/categories/{id}:
+       *   delete:
+       *     summary: Delete a single category.
+       *     description: Delete a single category
+       *     tags:
+       *      - Categories
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       204:
+       *        description: Category deleted successfully
+       */
+      .delete(this.categoryController.deleteCategory)
+      /**
+       * @swagger
+       * /api/v1/categories/{id}:
+       *   put:
+       *     summary: Update a Category
+       *     tags:
+       *      - Categories
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: Category updated successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               categoryName:
+       *                 type: string
+       *                 description: The category's name.
+       *                 example: Television
+       */
+      .put(this.categoryController.updateCategory);
+
+    app
+      .route("/api/v1/currencies")
+      /**
+       * @swagger
+       * /api/v1/currencies:
+       *   get:
+       *     summary: Retrieve a list of currencies
+       *     description: Retrieve a list of currencies.
+       *     tags:
+       *      - Currencies
+       *     responses:
+       *       200:
+       *         description: A list of currencies.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: array
+       *                   items:
+       *                     type: object
+       *                     properties:
+       *                       id:
+       *                         type: integer
+       *                         description: The category ID.
+       *                         example: 1
+       *                       currencyName:
+       *                         type: string
+       *                         description: The currency's name.
+       *                         example: TRY
+       *                       price:
+       *                         type: array
+       *                         description: The price's parents.
+       *                         example: []
+       *
+       */
       .get(this.currencyController.getCurrencies)
+
+      /**
+       * @swagger
+       * /api/v1/currencies:
+       *   post:
+       *     summary: Create a Currency
+       *     tags:
+       *      - Currencies
+       *     responses:
+       *       201:
+       *         description: Currency created successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               id:
+       *                type: integer
+       *                description: The currency id.
+       *                example: 1
+       *               currencyName:
+       *                 type: string
+       *                 description: The currency's name.
+       *                 example: TRY
+       *               price:
+       *                 type: array
+       *                 description: price id
+       *                 example: [1,2]
+       */
       .post(this.currencyController.saveCurrency);
 
     app
-      .route("/currencies/:id")
+      .route("/api/v1/currencies/:id")
+      /**
+       * @swagger
+       * /api/v1/currencies/{id}:
+       *   get:
+       *     summary: Retrieve a single currency.
+       *     description: Retrieve a single currency
+       *     tags:
+       *      - Currencies
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: A single currency.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: object
+       *                   properties:
+       *                     id:
+       *                       type: integer
+       *                       description: The currency ID.
+       *                       example: 0
+       *                     currencyName:
+       *                       type: string
+       *                       description: The currency's name.
+       *                       example: TRY
+       */
+      .get(this.currencyController.getCurrencyById)
+      /**
+       * @swagger
+       * /api/v1/currencies/{id}:
+       *   delete:
+       *     summary: Currency a single category.
+       *     description: Currency a single category
+       *     tags:
+       *      - Currencies
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       204:
+       *        description: Currency deleted successfully
+       */
       .delete(this.currencyController.deleteCurrency)
-      .post(this.currencyController.updateCurrency);
+
+      /**
+       * @swagger
+       * /api/v1/currencies/{id}:
+       *   put:
+       *     summary: Update a Currency
+       *     tags:
+       *      - Currencies
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: Currency updated successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               categoryName:
+       *                 type: string
+       *                 description: The currency's name.
+       *                 example: TRY
+       */
+      .put(this.currencyController.updateCurrency);
   }
 }
 

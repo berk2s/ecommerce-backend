@@ -48,6 +48,15 @@ class CurrencyController {
 
     res.json(updatedCurrency);
   }
+
+  public async getCurrencyById(req: Request, res: Response) {
+    const currencyService = new CurrencyService();
+    const currencyId = req.params.id as unknown as number;
+
+    const currency = await currencyService.getCurrencyById(currencyId);
+
+    res.json(currency);
+  }
 }
 
 export { CurrencyController };
