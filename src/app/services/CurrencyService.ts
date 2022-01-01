@@ -60,7 +60,11 @@ class CurrencyService {
 
     const currency = await manager.findOne(Currency, currencyId);
 
-    await manager.remove(currency);
+    if (currency) {
+      await manager.remove(currency);
+    }
+
+    return currency;
   }
 
   public async updateCurrency(
@@ -72,6 +76,10 @@ class CurrencyService {
     const currency = await manager.findOne(Currency, currencyId, {
       relations: ["price"],
     });
+
+    if (!currency) {
+      return { message: "There is no currency with that id mate." };
+    }
 
     if (
       updateCurrencyDto.deletedPrices &&

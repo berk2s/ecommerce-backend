@@ -75,9 +75,11 @@ class CategoryService {
 
     const category = await manager.findOne(Category, categoryId);
 
-    if (category) {
-      category.categoryName = updateCategoryDto.categoryName;
+    if (!category) {
+      return { message: "Category not found" };
     }
+
+    category.categoryName = updateCategoryDto.categoryName;
 
     const categoryUpdated = await manager.save(category);
 

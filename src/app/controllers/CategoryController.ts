@@ -15,6 +15,12 @@ class CategoryController {
     const categoryId = req.params.id as unknown as number;
 
     const category = await categoryService.getCategoryById(categoryId);
+    if (!category) {
+      res
+        .status(404)
+        .json({ message: "There is no category with that id mate." });
+      return;
+    }
 
     res.json(category);
   }
@@ -29,13 +35,18 @@ class CategoryController {
     const categoryService = new CategoryService();
     const createCategoryDto: CreateCategoryDto = req.body;
 
+    if (!createCategoryDto.parents) {
+      res.status(400).json({ message: "You need to specify parents" });
+      return;
+    }
+    if (!createCategoryDto.categoryName) {
+      res.status(400).json({ message: "You need to specify category name" });
+      return;
+    }
+
     const savedCategory = await categoryService.createCategory(
       createCategoryDto
     );
-
-    if (!createCategoryDto.parents) {
-      res.status(400).json({ message: "Categories are required" });
-    }
 
     if (!savedCategory) {
       res.status(400).json();
@@ -54,8 +65,11 @@ class CategoryController {
     const categoryService = new CategoryService();
 
     const categories = await categoryService.getCategories();
+    if (categories.length === 0) {
+      res.status(404).json({ message: "There are no categories" });
+      return;
+    }
 
-    console.log(req);
     res.json(categories);
   }
 
@@ -68,7 +82,11 @@ class CategoryController {
     const categoryService = new CategoryService();
     const categoryId = req.params.id as unknown as number;
 
-    await categoryService.deleteCategory(categoryId);
+    const deletedCategory = await categoryService.deleteCategory(categoryId);
+    if (!deletedCategory) {
+      res.status(404).json({ message: "You already deleted that mate." });
+      return;
+    }
 
     res.status(204).json();
   }
@@ -84,6 +102,11 @@ class CategoryController {
     const categoryService = new CategoryService();
     const updateCategoryDto: UpdateCategoryDto = req.body;
     const categoryId = req.params.id as unknown as number;
+
+    if (!updateCategoryDto.categoryName) {
+      res.status(400).json({ message: "You need to specify category name" });
+      return;
+    }
 
     const updatedCategory = await categoryService.updateCategory(
       categoryId,

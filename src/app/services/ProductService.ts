@@ -46,12 +46,18 @@ class ProductService {
   public async deleteProduct(id: number) {
     const manager = getManager();
     const product = await manager.findOne(Product, id);
-    manager.remove(product);
+    if (product) {
+      await manager.remove(product);
+    }
+    return product;
   }
 
   public async updateProduct(id: number, productCategoryDto: UpdateProductDto) {
     const manager = getManager();
     const productToUpdate = await manager.findOne(Product, id);
+    if (!productToUpdate) {
+      return { message: "There is no product with that id mate." };
+    }
     productToUpdate.productName = productCategoryDto.productName;
     productToUpdate.description = productCategoryDto.description;
     productToUpdate.status = productCategoryDto.status;

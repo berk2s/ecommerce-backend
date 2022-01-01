@@ -5,7 +5,11 @@ import { tokenMiddleware } from "./middlewares/token-middleware";
 import { TokenUtility } from "./utilities/TokenUtility";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import { errorHandler, notFound } from "./middlewares/error-middleware";
 
+/**
+ * @description This is a config for swagger
+ */
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -37,6 +41,9 @@ class App {
 
     this._routes = new Routes();
     this._routes.routes(this.app);
+
+    this.app.use(notFound);
+    this.app.use(errorHandler);
 
     this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   }

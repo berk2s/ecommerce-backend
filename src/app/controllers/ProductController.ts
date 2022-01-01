@@ -7,6 +7,14 @@ class ProductController {
     const productService = new ProductService();
 
     const createProductDto: CreateProductDto = req.body;
+    if (!createProductDto.productName) {
+      res.status(400).json({ message: "You need to specify productName" });
+      return;
+    }
+    if (!createProductDto.categories) {
+      res.status(400).json({ message: "You need to specify categories" });
+      return;
+    }
 
     const newProduct = await productService.createProduct(createProductDto);
 
@@ -17,6 +25,10 @@ class ProductController {
     const productService = new ProductService();
 
     const products = await productService.getProducts();
+    if (products.length === 0) {
+      res.status(404).json({ message: "There are no products" });
+      return;
+    }
 
     res.json(products);
   }
@@ -27,6 +39,12 @@ class ProductController {
     const id = req.params.id as unknown as number;
 
     const product = await productService.getProduct(id);
+    if (!product) {
+      res
+        .status(404)
+        .json({ message: "There is no product with that id mate." });
+      return;
+    }
 
     res.json(product);
   }
@@ -36,7 +54,13 @@ class ProductController {
 
     const id = req.params.id as unknown as number;
 
-    await productService.deleteProduct(id);
+    const deletedProduct = await productService.deleteProduct(id);
+    if (!deletedProduct) {
+      res
+        .status(404)
+        .json({ message: "There is no product with that id mate." });
+      return;
+    }
 
     res.status(204).json();
   }
@@ -45,6 +69,15 @@ class ProductController {
     const productService = new ProductService();
     const updateProductDto: UpdateProductDto = req.body;
     const productId = req.params.id as unknown as number;
+
+    if (!updateProductDto.productName) {
+      res.status(400).json({ message: "You need to specify productName" });
+      return;
+    }
+    if (!updateProductDto.description) {
+      res.status(400).json({ message: "You need to specify description" });
+      return;
+    }
 
     const updatedProduct = await productService.updateProduct(
       productId,
