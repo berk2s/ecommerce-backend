@@ -15,7 +15,7 @@ const swaggerOptions = {
     openapi: "3.0.0",
     info: {
       title: "Rocket TEAM API",
-      description: "Rocket TEAM API Information",
+      description: "Rocket TEAM API 🚀🚀🚀",
       contact: {
         name: "Rocket TEAM",
       },
@@ -41,11 +41,10 @@ class App {
 
     this._routes = new Routes();
     this._routes.routes(this.app);
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
     this.app.use(notFound);
     this.app.use(errorHandler);
-
-    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   }
 }
 export default new App().app;

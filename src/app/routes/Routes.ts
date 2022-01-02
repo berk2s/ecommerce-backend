@@ -28,17 +28,6 @@ class Routes {
     // TODO: implement middleware to routes
 
     app
-      .route("/api/v1/prices")
-      .get(this.priceController.getPrices)
-      .post(this.priceController.createPrice);
-
-    app
-      .route("/api/v1/prices/:id")
-      .put(this.priceController.updatePrice)
-      .delete(this.priceController.deletePrice)
-      .get(this.priceController.getPriceById);
-
-    app
       .route("/api/v1/products")
       /**
        * @swagger
@@ -505,6 +494,165 @@ class Routes {
        *                 example: TRY
        */
       .put(this.currencyController.updateCurrency);
+
+    app
+      .route("/api/v1/prices")
+      /**
+       * @swagger
+       * /api/v1/prices:
+       *   get:
+       *     summary: Retrieve a list of prices
+       *     description: Retrieve a list of prices.
+       *     tags:
+       *      - Prices
+       *     responses:
+       *       200:
+       *         description: A list of prices.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: array
+       *                   items:
+       *                     type: object
+       *                     properties:
+       *                       productId:
+       *                         type: integer
+       *                         description: The productId.
+       *                         example: 1
+       *                       currencyId:
+       *                         type: integer
+       *                         description: The currencyId.
+       *                         example: 1
+       *                       price:
+       *                         type: integer
+       *                         description: The price
+       *                         example: 50
+       *
+       */
+      .get(this.priceController.getPrices)
+
+      /**
+       * @swagger
+       * /api/v1/prices:
+       *   post:
+       *     summary: Create a Price
+       *     tags:
+       *      - Prices
+       *     responses:
+       *       201:
+       *         description: Price created successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               productId:
+       *                type: integer
+       *                description: The productId.
+       *                example: 1
+       *               currencyId:
+       *                 type: integer
+       *                 description: The currencyId.
+       *                 example: 1
+       *               price:
+       *                 type: integer
+       *                 description: Amount of price
+       *                 example: 50
+       */
+      .post(tokenMiddleware, this.priceController.createPrice);
+
+    app
+      .route("/api/v1/prices/:id")
+      /**
+       * @swagger
+       * /api/v1/prices/{id}:
+       *   put:
+       *     summary: Update a Price
+       *     tags:
+       *      - Prices
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: Currency updated successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               price:
+       *                 type: integer
+       *                 description: Amount of price
+       *                 example: 75
+       *               currencyId:
+       *                 type: integer
+       *                 description: The currencyId.
+       *                 example: 1
+       *               productId:
+       *                 type: integer
+       *                 description: The productId.
+       *                 example: 1
+       */
+      .put(this.priceController.updatePrice)
+      /**
+       * @swagger
+       * /api/v1/prices/{id}:
+       *   delete:
+       *     summary: Delete price.
+       *     description: Delete price
+       *     tags:
+       *      - Prices
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       204:
+       *        description: Price deleted successfully
+       */
+      .delete(this.priceController.deletePrice)
+      /**
+       * @swagger
+       * /api/v1/prices/{id}:
+       *   get:
+       *     summary: Retrieve a single price.
+       *     description: Retrieve a single price
+       *     tags:
+       *      - Prices
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: A single price.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: object
+       *                   properties:
+       *                     id:
+       *                       type: integer
+       *                       description: The price ID.
+       *                       example: 0
+       *                     price:
+       *                       type: integer
+       *                       description: Amount of price.
+       *                       example: 50
+       */
+      .get(this.priceController.getPriceById);
   }
 }
 
