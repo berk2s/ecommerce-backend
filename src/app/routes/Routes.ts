@@ -1,6 +1,7 @@
 import { Request, Response, Application } from "express";
 import { CategoryController } from "../controllers/CategoryController";
 import { CurrencyController } from "../controllers/CurrencyController";
+import { PriceController } from "../controllers/PriceController";
 import { ProductController } from "../controllers/ProductController";
 import { tokenMiddleware } from "../middlewares/token-middleware";
 
@@ -8,11 +9,13 @@ class Routes {
   private productController: ProductController;
   private categoryController: CategoryController;
   private currencyController: CurrencyController;
+  private priceController: PriceController;
 
   constructor() {
     this.productController = new ProductController();
     this.categoryController = new CategoryController();
     this.currencyController = new CurrencyController();
+    this.priceController = new PriceController();
   }
 
   public routes(app: Application): void {
@@ -23,6 +26,17 @@ class Routes {
     });
 
     // TODO: implement middleware to routes
+
+    app
+      .route("/api/v1/prices")
+      .get(this.priceController.getPrices)
+      .post(this.priceController.createPrice);
+
+    app
+      .route("/api/v1/prices/:id")
+      .put(this.priceController.updatePrice)
+      .delete(this.priceController.deletePrice)
+      .get(this.priceController.getPriceById);
 
     app
       .route("/api/v1/products")

@@ -2,34 +2,31 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
-} from 'typeorm'
-import { Currency } from './Currency'
-import { Product } from './Product'
+} from "typeorm";
+import { Currency } from "./Currency";
+import { Product } from "./Product";
 
 @Entity()
 export class Price {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  price: number
+  price: number;
 
   @ManyToOne(() => Product, (product) => product.prices)
-  product: Product
+  product: Product;
 
   @ManyToOne(() => Currency, (currency) => currency.price)
-  currency: Currency
+  currency: Currency;
 
   @CreateDateColumn()
-  createdAt: Timestamp
+  createdAt: Timestamp;
 
   @UpdateDateColumn()
-  lastModifiedAt: Timestamp
+  lastModifiedAt: Timestamp;
 }

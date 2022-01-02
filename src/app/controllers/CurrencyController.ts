@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateCurrencyDto } from "../models/Currency";
+import { CreateCurrencyDto, UpdateCurrencyDto } from "../models/Currency";
 import { CurrencyService } from "../services/CurrencyService";
 
 class CurrencyController {
@@ -58,12 +58,25 @@ class CurrencyController {
 
   public async updateCurrency(req: Request, res: Response) {
     const currencyService = new CurrencyService();
-    const currencyDto = req.body;
+    const updateCurrencyDto: UpdateCurrencyDto = req.body;
     const currencyId = req.params.id as unknown as number;
+
+    if (!updateCurrencyDto.currencyName) {
+      res.status(400).json({ message: "You need to specify currencyName" });
+      return;
+    }
+    if (!updateCurrencyDto.addedPrices) {
+      res.status(400).json({ message: "You need to specify addedPrices" });
+      return;
+    }
+    if (!updateCurrencyDto.deletedPrices) {
+      res.status(400).json({ message: "You need to specify deletedPrices" });
+      return;
+    }
 
     const updatedCurrency = await currencyService.updateCurrency(
       currencyId,
-      currencyDto
+      updateCurrencyDto
     );
 
     res.json(updatedCurrency);
