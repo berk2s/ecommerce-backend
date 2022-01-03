@@ -3,7 +3,7 @@ import { getManager } from 'typeorm'
 import { Product } from '../entity/Product'
 import { Rating } from '../entity/Rating'
 import { CreateRatingDto, RatingDto, UpdateRatingDto } from '../models/Rating'
-import { CreateProductDto, UpdateProductDto } from '../models/Product'
+//import { CreateProductDto, UpdateProductDto } from '../models/Product'
 
 class RatingService{
   constructor() {}
@@ -12,28 +12,46 @@ class RatingService{
     const manager = getManager()
 
     const ratings: Rating[] = await manager.find(Rating, {
-      relations: ['userId', 'productId', 'userRating', 'userReview'],
+      relations: ['userRating', 'userReview'],
     })
 
-    let RatingDto: RatingDto[] = []
+    const products: Product[] = await manager.find(Product, {
+      relations: ['productId', 'userRatings', 'userReviews']
+    })
+
+    let ratingsDto: RatingDto[] = []
 
     ratings.forEach((rating: Rating) => {
-      const ratingArr = rating.userRating.map((userRating) => {
-        return {
-          id: userRating.id,
-        }
-      })
+      let productId = rating.product.id;
+      let userRating = rating.userRating;
+      let userReview = rating.userReview;
 
       const ratingDto: RatingDto = {
-        userRating: [...ratingArr],
-        userReview: [...reviewArr],
-        productID: 0
-      }
+        productId,
+        userRating,
+        userReview,
+      };
+      ratingsDto = [...ratingsDto, ratingDto];
+    });
+    return ratingsDto;
 
-      ratingDto = [...currenciesDto, currencyDto]
-    })
+    // ratings.forEach((rating: Rating) => {
+    //   const ratingArr = rating.userRating.map((userRating) => {
+    //     return {
+    //       id: userRating.id,
+    //     }
+    //   })
 
-    return currenciesDto
+    //   const ratingDto: RatingDto = {
+    //     userRating: [...ratingArr],
+    //     userReview: [...reviewArr],
+    //     productID: 0
+    //   }
+
+    //   ratingDto = [...currenciesDto, currencyDto]
+    // })
+
+    // return currenciesDto
     // const manager = getManager()
 
     // const currencies = await manager.find(Currency)
@@ -87,3 +105,5 @@ class RatingService{
   }
 
 }
+
+export { RatingService };
