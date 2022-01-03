@@ -39,7 +39,7 @@ export class Product {
   userRatings: Rating[]
 
   @OneToMany(() => Rating, (Rating) => Rating.userReview)
-  userReviews: Text[]
+  userReviews: string[]
 
   @CreateDateColumn()
   createdAt: Timestamp

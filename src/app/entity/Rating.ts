@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Product } from './Product'
-// BURAYA USER TABLOSU EKLENECEK
+// BURAYA USER TABLOSU İMPORTLANACAK
 
 @Entity()
 export class Rating {

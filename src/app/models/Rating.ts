@@ -1,12 +1,19 @@
+export interface RatingDto {
+  productID: number
+  userRating: number[]
+  userReview: string[]
+}
+
 export interface CreateRatingDto {
-    productID: number
-    productName: string
-    userRating: number
-    userReview: string
+  //userID eklenecek
+  productID: number
+  userRating: number
+  userReview: string
 }
 
 export interface UpdateRatingDto {
-    productName?: string
-    userRating?: number
-    userReview?: string
+  //sadece review değiştirilebilir olsun.
+  //productName?: string
+  //userRating?: number
+  userReview?: string
 }

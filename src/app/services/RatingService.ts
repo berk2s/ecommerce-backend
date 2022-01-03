@@ -2,58 +2,88 @@
 import { getManager } from 'typeorm'
 import { Product } from '../entity/Product'
 import { Rating } from '../entity/Rating'
-import { CreateRatingDto, UpdateRatingDto } from '../models/Rating'
+import { CreateRatingDto, RatingDto, UpdateRatingDto } from '../models/Rating'
 import { CreateProductDto, UpdateProductDto } from '../models/Product'
 
 class RatingService{
-    constructor() {}
+  constructor() {}
 
-    public async createRating(createRatingDto: CreateRatingDto) {
+  public async getRatings() {
+    const manager = getManager()
 
-        // const productWithReview = await manager.findOne(Product, productId, {
-        //     relations: ['reviews']
-        // })
+    const ratings: Rating[] = await manager.find(Rating, {
+      relations: ['userId', 'productId', 'userRating', 'userReview'],
+    })
 
-        const manager = getManager()
-        const productId = createRatingDto.productID;
+    let RatingDto: RatingDto[] = []
 
-        const product: Product = await manager.findOne(Product, productId);
+    ratings.forEach((rating: Rating) => {
+      const ratingArr = rating.userRating.map((userRating) => {
+        return {
+          id: userRating.id,
+        }
+      })
 
-        const rating = new Rating();
-        // TODO: implement user id
-        rating.userReview = createRatingDto.userReview
-        rating.userRating = createRatingDto.userRating
-        rating.product = product;
+      const ratingDto: RatingDto = {
+        userRating: [...ratingArr],
+        userReview: [...reviewArr],
+        productID: 0
+      }
 
-        const savedReview = manager.save(rating);
+      ratingDto = [...currenciesDto, currencyDto]
+    })
 
-        return savedReview;
-        // const manager = getManager()
+    return currenciesDto
+    // const manager = getManager()
 
-        // const rating = new Rating()
-        // const product = new Product()
+    // const currencies = await manager.find(Currency)
 
+    // return currencies
+  }
 
-        // rating.productName = CreateRatingDto.productName // sağdaki postmandan
-        // product.userRatings = []
-        // product.userReviews = []
-        // // rating.userRatings = CreateRatingDto.userRating
-        // // rating.userReviews = CreateRatingDto.userReview
+  public async getRating(id: number) {
+    const manager = getManager()
+    const rating = await manager.findOne(Rating, id)
+    return rating
+  }
 
-        // const userRatings = await manager.findByIds(Rating, CreateRatingDto.userRating)
+  public async createRating(createRatingDto: CreateRatingDto) {
+    // TODO: implement userID
+    const manager = getManager()
+    const productId = createRatingDto.productID;
 
-        // userRatings.forEach((pUserRating) => {
-        //     product.userRatings = [...product.userRatings, pUserRating]
-        // })
+    const product: Product = await manager.findOne(Product, productId);
 
-        // const userReviews = await manager.findByIds(Rating, CreateRatingDto.userReview)
+    const rating = new Rating();
+    // TODO: implement user id
+    rating.product = product;
+    rating.userReview = createRatingDto.userReview
+    rating.userRating = createRatingDto.userRating
 
-        // userReviews.forEach((pUserReview) => {
-        //     product.userReviews = [...product.userReviews, pUserReview]
-        // })
+    const savedReview = manager.save(rating);
 
-        // const savedProduct = manager.save(product)
+    return savedReview;
+  }
 
-        // return savedProduct
+  public async deleteRating(ratingId: number) {
+    const manager = getManager()
+
+    const rating = await manager.findOne(Rating, ratingId)
+
+    await manager.remove(rating)
+  }
+
+  public async updateRating(ratingId: number, updateRatingDto: UpdateRatingDto) {
+    const manager = getManager() // get repository
+
+    const rating = await manager.findOne(Rating, ratingId)
+
+    if (rating) {
+      rating.userReview = updateRatingDto.userReview
     }
+    const ratingUpdated = await manager.save(rating)
+
+    return ratingUpdated
+  }
+
 }
