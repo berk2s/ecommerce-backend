@@ -16,6 +16,8 @@ class ProductService {
     product.categories = [];
     product.description = createProductDto.description;
     product.status = createProductDto.status;
+    product.userRatings = createProductDto.userRating;
+    product.userReviews = createProductDto.userReview;
 
     const categories = await manager.findByIds(
       Category,
@@ -33,7 +35,7 @@ class ProductService {
 
   public async getProducts() {
     const manager = getManager();
-    const products = await manager.find(Product);
+    const products = await manager.find(Product, {relations: ['userRating', 'userReview']});
     return products;
   }
 

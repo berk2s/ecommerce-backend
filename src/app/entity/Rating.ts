@@ -18,13 +18,15 @@ export class Rating {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Product, (product) => product.userReviews)
+  @ManyToOne(() => Product, (product) => product.id)
   product: Product;
 
-  @ManyToOne(() => Product, (product) => product.userRatings)
+  @ManyToOne(() => Product, (product) => product.userRating, {
+    cascade: ["insert"],
+  })
   userRating: number;
 
-  @ManyToOne(() => Product, (product) => product.userReviews)
+  @ManyToOne(() => Product, (product) => product.userReview)
   userReview: string;
 
   @CreateDateColumn()

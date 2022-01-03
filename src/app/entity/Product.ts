@@ -35,10 +35,10 @@ export class Product {
   status: string;
 
   @OneToMany(() => Rating, (Rating) => Rating.userRating)
-  userRatings: Rating[];
+  userRating: number[];
 
   @OneToMany(() => Rating, (Rating) => Rating.userReview)
-  userReviews: string[];
+  userReview: string[];
 
   @CreateDateColumn()
   createdAt: Timestamp;
