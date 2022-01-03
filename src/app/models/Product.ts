@@ -3,8 +3,6 @@ export interface CreateProductDto {
   categories: number[];
   description: string;
   status?: string;
-  userRating: number[];
-  userReview: string[];
 }
 
 export interface UpdateProductDto {

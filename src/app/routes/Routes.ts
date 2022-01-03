@@ -28,12 +28,11 @@ class Routes {
       });
     });
 
-    // TODO: implement middleware to routes
-
     app
       .route("/api/v1/ratings")
       .get(this.ratingController.getRatings)
       .post(this.ratingController.createRating);
+    // TODO: implement middleware to routes
     app
       .route("/api/v1/products")
       /**
@@ -571,7 +570,7 @@ class Routes {
        *                 description: Amount of price
        *                 example: 50
        */
-      .post(tokenMiddleware, this.priceController.createPrice);
+      .post(this.priceController.createPrice);
 
     app
       .route("/api/v1/prices/:id")

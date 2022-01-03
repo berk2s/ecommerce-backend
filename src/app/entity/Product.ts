@@ -34,11 +34,22 @@ export class Product {
   @Column({ nullable: true })
   status: string;
 
-  @OneToMany(() => Rating, (Rating) => Rating.userRating)
+  @OneToMany(() => Rating, (rating) => rating.product, {
+    cascade: ["insert"],
+    onDelete: "CASCADE",
+  })
   userRating: number[];
 
-  @OneToMany(() => Rating, (Rating) => Rating.userReview)
-  userReview: string[];
+  @OneToMany(() => Rating, (rating) => rating.product, {
+    cascade: ["insert"],
+    onDelete: "CASCADE",
+  })
+  userReviews: string[];
+
+  // @OneToMany(() => Rating, (rating) => rating.product, {
+  //   cascade: ["insert"],
+  // })
+  // userReviews: number[];
 
   @CreateDateColumn()
   createdAt: Timestamp;
