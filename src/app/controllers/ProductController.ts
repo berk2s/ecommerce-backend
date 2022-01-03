@@ -16,6 +16,11 @@ class ProductController {
       return;
     }
 
+    if (!createProductDto.description) {
+      res.status(400).json({ message: "You need to specify description" });
+      return;
+    }
+
     const newProduct = await productService.createProduct(createProductDto);
 
     res.status(201).json(newProduct);
