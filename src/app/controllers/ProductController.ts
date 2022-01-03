@@ -1,55 +1,90 @@
-import { Request, Response } from 'express'
-import { CreateProductDto, UpdateProductDto } from '../models/Product'
-import { ProductService } from '../services/ProductService'
+import { Request, Response } from "express";
+import { CreateProductDto, UpdateProductDto } from "../models/Product";
+import { ProductService } from "../services/ProductService";
 
 class ProductController {
   public async saveProduct(req: Request, res: Response) {
-    const productService = new ProductService()
+    const productService = new ProductService();
 
-    const createProductDto: CreateProductDto = req.body
+    const createProductDto: CreateProductDto = req.body;
+    if (!createProductDto.productName) {
+      res.status(400).json({ message: "You need to specify productName" });
+      return;
+    }
+    if (!createProductDto.categories) {
+      res.status(400).json({ message: "You need to specify categories" });
+      return;
+    }
 
-    const newProduct = await productService.createProduct(createProductDto)
+    const newProduct = await productService.createProduct(createProductDto);
 
-    res.json(newProduct)
+    res.status(201).json(newProduct);
   }
 
   public async getProducts(req: Request, res: Response) {
-    const productService = new ProductService()
+    const productService = new ProductService();
 
-    const products = await productService.getProducts()
+    const products = await productService.getProducts();
+    if (products.length === 0) {
+      res.status(404).json({ message: "There are no products" });
+      return;
+    }
 
-    res.json(products)
+    res.json(products);
   }
 
   public async getProduct(req: Request, res: Response) {
-    const productService = new ProductService()
+    const productService = new ProductService();
 
-    const id = req.params.id as unknown as number
+    const id = req.params.id as unknown as number;
 
-    const product = await productService.getProduct(id)
+    const product = await productService.getProduct(id);
+    if (!product) {
+      res
+        .status(404)
+        .json({ message: "There is no product with that id mate." });
+      return;
+    }
 
-    res.json(product)
+    res.json(product);
   }
 
   public async deleteProduct(req: Request, res: Response) {
-    const productService = new ProductService()
+    const productService = new ProductService();
 
-    const id = req.params.id as unknown as number
+    const id = req.params.id as unknown as number;
 
-    await productService.deleteProduct(id)
+    const deletedProduct = await productService.deleteProduct(id);
+    if (!deletedProduct) {
+      res
+        .status(404)
+        .json({ message: "There is no product with that id mate." });
+      return;
+    }
 
-    res.status(204).json()
+    res.status(204).json();
   }
 
   public async updateProduct(req: Request, res: Response) {
-    const productService = new ProductService()
-    const updateProductDto: UpdateProductDto = req.body
-    const productId = req.params.id as unknown as number
+    const productService = new ProductService();
+    const updateProductDto: UpdateProductDto = req.body;
+    const productId = req.params.id as unknown as number;
 
-    const updatedProduct = await productService.
-    updateProduct(productId, updateProductDto)
+    if (!updateProductDto.productName) {
+      res.status(400).json({ message: "You need to specify productName" });
+      return;
+    }
+    if (!updateProductDto.description) {
+      res.status(400).json({ message: "You need to specify description" });
+      return;
+    }
 
-    res.json(updatedProduct)
+    const updatedProduct = await productService.updateProduct(
+      productId,
+      updateProductDto
+    );
+
+    res.json(updatedProduct);
   }
 }
-export { ProductController }
+export { ProductController };

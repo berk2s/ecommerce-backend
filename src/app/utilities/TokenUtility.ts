@@ -1,7 +1,7 @@
-import axios from 'axios'
-import { Jwks } from '../models/Jwks'
-import { API } from './api-endpoints'
-import jwkToPem from 'jwk-to-pem'
+import axios from "axios";
+import { Jwks } from "../models/Jwks";
+import { API } from "./api-endpoints";
+import jwkToPem from "jwk-to-pem";
 
 export abstract class TokenUtility {
   /**
@@ -9,13 +9,15 @@ export abstract class TokenUtility {
    */
   public static async initilaizePublicKey(): Promise<void> {
     try {
-      const jwkRequest = await axios.get(API.JWKS_URL)
+      const jwkRequest = await axios.get(API.JWKS_URL);
 
-      const publicKey: string = jwkToPem(jwkRequest.data.keys[0])
+      const publicKey: string = jwkToPem(jwkRequest.data.keys[0]);
 
-      TokenUtility.savePublicKey(publicKey)
+      TokenUtility.savePublicKey(publicKey);
+
+      console.log(`Public key`, publicKey);
     } catch (e: any) {
-      throw new Error('Public keys can not be initialized!')
+      throw new Error("Public keys can not be initialized!");
     }
   }
 
@@ -23,7 +25,7 @@ export abstract class TokenUtility {
    * Gets public key from global object
    */
   public static get publicKey(): string {
-    return global.publicKey as string
+    return global.publicKey as string;
   }
 
   /**
@@ -31,6 +33,6 @@ export abstract class TokenUtility {
    * @param publicKey key that will be saved
    */
   public static savePublicKey(publicKey: string): void {
-    global.publicKey = publicKey
+    global.publicKey = publicKey;
   }
 }

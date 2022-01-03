@@ -2,30 +2,29 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
-} from 'typeorm'
-import { Price } from './Price'
+} from "typeorm";
+import { Price } from "./Price";
 
 @Entity()
 export class Currency {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
-  @OneToMany(() => Price, (price) => price.currency, {}) cascade: ['insert']
-  price: Price[]
+  @OneToMany(() => Price, (price) => price.currency, {
+    cascade: ["insert"],
+  })
+  price: Price[];
 
   @Column()
-  currencyName: string
+  currencyName: string;
 
   @CreateDateColumn()
-  createdAt: Timestamp
+  createdAt: Timestamp;
 
   @UpdateDateColumn()
-  lastModifiedAt: Timestamp
+  lastModifiedAt: Timestamp;
 }
