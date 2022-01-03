@@ -3,6 +3,7 @@ import { CategoryController } from "../controllers/CategoryController";
 import { CurrencyController } from "../controllers/CurrencyController";
 import { PriceController } from "../controllers/PriceController";
 import { ProductController } from "../controllers/ProductController";
+import { RatingController } from "../controllers/RatingController";
 import { tokenMiddleware } from "../middlewares/token-middleware";
 
 class Routes {
@@ -10,12 +11,14 @@ class Routes {
   private categoryController: CategoryController;
   private currencyController: CurrencyController;
   private priceController: PriceController;
+  private ratingController: RatingController;
 
   constructor() {
     this.productController = new ProductController();
     this.categoryController = new CategoryController();
     this.currencyController = new CurrencyController();
     this.priceController = new PriceController();
+    this.ratingController = new RatingController();
   }
 
   public routes(app: Application): void {
@@ -27,6 +30,10 @@ class Routes {
 
     // TODO: implement middleware to routes
 
+    app
+      .route("/api/v1/ratings")
+      .get(this.ratingController.getRatings)
+      .post(this.ratingController.createRating);
     app
       .route("/api/v1/products")
       /**

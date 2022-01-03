@@ -22,11 +22,9 @@ export class Rating {
   product: Product;
 
   @ManyToOne(() => Product, (product) => product.userRatings)
-  //@Column()
   userRating: number;
 
   @ManyToOne(() => Product, (product) => product.userReviews)
-  //@Column()
   userReview: string;
 
   @CreateDateColumn()

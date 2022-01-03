@@ -1,25 +1,25 @@
 // array olarak gelen review ve rating değerleri burada manipulate edilecek.
-import { getManager } from 'typeorm'
-import { Product } from '../entity/Product'
-import { Rating } from '../entity/Rating'
-import { CreateRatingDto, RatingDto, UpdateRatingDto } from '../models/Rating'
+import { getManager } from "typeorm";
+import { Product } from "../entity/Product";
+import { Rating } from "../entity/Rating";
+import { CreateRatingDto, RatingDto, UpdateRatingDto } from "../models/Rating";
 //import { CreateProductDto, UpdateProductDto } from '../models/Product'
 
-class RatingService{
+class RatingService {
   constructor() {}
 
   public async getRatings() {
-    const manager = getManager()
+    const manager = getManager();
 
     const ratings: Rating[] = await manager.find(Rating, {
-      relations: ['userRating', 'userReview'],
-    })
+      relations: ["userRating", "userReview"],
+    });
 
-    const products: Product[] = await manager.find(Product, {
-      relations: ['productId', 'userRatings', 'userReviews']
-    })
+    // const products: Product[] = await manager.find(Product, {
+    //   relations: ["productId", "userRatings", "userReviews"],
+    // });
 
-    let ratingsDto: RatingDto[] = []
+    let ratingsDto: RatingDto[] = [];
 
     ratings.forEach((rating: Rating) => {
       let productId = rating.product.id;
@@ -59,51 +59,53 @@ class RatingService{
     // return currencies
   }
 
-  public async getRating(id: number) {
-    const manager = getManager()
-    const rating = await manager.findOne(Rating, id)
-    return rating
-  }
+  // public async getRating(id: number) {
+  //   const manager = getManager();
+  //   const rating = await manager.findOne(Rating, id);
+  //   return rating;
+  // }
 
   public async createRating(createRatingDto: CreateRatingDto) {
     // TODO: implement userID
-    const manager = getManager()
-    const productId = createRatingDto.productID;
+    const manager = getManager();
+    const productId = createRatingDto.productId;
 
     const product: Product = await manager.findOne(Product, productId);
 
     const rating = new Rating();
     // TODO: implement user id
     rating.product = product;
-    rating.userReview = createRatingDto.userReview
-    rating.userRating = createRatingDto.userRating
+    rating.userReview = createRatingDto.userReview;
+    rating.userRating = createRatingDto.userRating;
 
-    const savedReview = manager.save(rating);
+    const savedReview = await manager.save(rating);
 
     return savedReview;
   }
 
   public async deleteRating(ratingId: number) {
-    const manager = getManager()
+    const manager = getManager();
 
-    const rating = await manager.findOne(Rating, ratingId)
+    const rating = await manager.findOne(Rating, ratingId);
 
-    await manager.remove(rating)
+    await manager.remove(rating);
   }
 
-  public async updateRating(ratingId: number, updateRatingDto: UpdateRatingDto) {
-    const manager = getManager() // get repository
+  public async updateRating(
+    ratingId: number,
+    updateRatingDto: UpdateRatingDto
+  ) {
+    const manager = getManager(); // get repository
 
-    const rating = await manager.findOne(Rating, ratingId)
+    const rating = await manager.findOne(Rating, ratingId);
 
     if (rating) {
-      rating.userReview = updateRatingDto.userReview
+      rating.userReview = updateRatingDto.userReview;
     }
-    const ratingUpdated = await manager.save(rating)
+    const ratingUpdated = await manager.save(rating);
 
-    return ratingUpdated
+    return ratingUpdated;
   }
-
 }
 
 export { RatingService };
