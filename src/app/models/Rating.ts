@@ -1,7 +1,7 @@
 export interface RatingDto {
-  productID: number
-  userRating: number[]
-  userReview: string[]
+  productId: number
+  userRating: number
+  userReview: string
 }
 
 export interface CreateRatingDto {
