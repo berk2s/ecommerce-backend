@@ -22,6 +22,7 @@ class RatingService {
         productId,
         // Dto dan gelen userRating
         userRating: rating.userRating,
+        userReview: rating.userReview,
       };
       ratingsDto = [...ratingsDto, ratingDto];
     });
@@ -33,6 +34,7 @@ class RatingService {
 
     const rating = new Rating();
     rating.userRating = ratingDto.userRating;
+    rating.userReview = ratingDto.userReview;
     rating.product = await manager.findOne(Product, ratingDto.productId);
 
     const savedRating = await manager.save(rating);

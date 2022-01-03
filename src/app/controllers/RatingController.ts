@@ -24,6 +24,11 @@ class RatingController {
       res.status(400).json({ message: "You need to specify rating" });
       return;
     }
+    if (!ratingDto.userReview) {
+      res.status(400).json({ message: "You need to specify review" });
+      return;
+    }
+
     const newRating = await ratingService.createRating(ratingDto);
     res.status(201).json(newRating);
   }
