@@ -21,7 +21,6 @@ export const tokenMiddleware: NextHandleFunction = (
   res: Response,
   next: NextFunction
 ): void => {
-
   const tokenHeader = req.headers["authorization"];
 
   if (!tokenHeader || !tokenHeader.startsWith("Bearer ")) {
@@ -32,15 +31,19 @@ export const tokenMiddleware: NextHandleFunction = (
   const token = tokenHeader.split("Bearer ")[1];
 
   if (!token) {
+    console.log("token", token);
     res.sendStatus(401);
     return;
   }
 
   jwt.verify(token, TokenUtility.publicKey, (error: any, payload: any) => {
     if (error) {
+      console.log("payload", payload);
       res.sendStatus(401);
       return;
     }
+
+    console.log("payload", payload);
 
     // TODO: checks if token contains valid scope which is already defined before
 
@@ -63,7 +66,6 @@ export const tokenMiddleware: NextHandleFunction = (
     if (!scopesOfUser.includes(scopeOfUrl.scopes[0])) {
       res.sendStatus(403);
     }
-
     next();
   });
 };

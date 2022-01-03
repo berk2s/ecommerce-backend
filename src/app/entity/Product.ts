@@ -8,42 +8,41 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
-} from 'typeorm'
-import { Category } from './Category'
-import { Price } from './Price'
-import { Rating } from './Rating'
-
+} from "typeorm";
+import { Category } from "./Category";
+import { Price } from "./Price";
+import { Rating } from "./Rating";
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  productName: string
+  productName: string;
 
   @ManyToMany(() => Category)
   @JoinTable()
-  categories: Category[]
+  categories: Category[];
 
   @OneToMany(() => Price, (price) => price.product)
-  prices: Price[]
+  prices: Price[];
 
-  @Column({nullable: true})
-  description: string
+  @Column({ nullable: true })
+  description: string;
 
-  @Column({nullable: true})
-  status: string
+  @Column({ nullable: true })
+  status: string;
 
   @OneToMany(() => Rating, (Rating) => Rating.userRating)
-  userRatings: Rating[]
+  userRatings: Rating[];
 
   @OneToMany(() => Rating, (Rating) => Rating.userReview)
-  userReviews: string[]
+  userReviews: string[];
 
   @CreateDateColumn()
-  createdAt: Timestamp
+  createdAt: Timestamp;
 
   @UpdateDateColumn()
-  lastModifiedAt: Timestamp
+  lastModifiedAt: Timestamp;
 }

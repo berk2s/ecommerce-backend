@@ -9,27 +9,27 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
-} from 'typeorm'
-import { Product } from './Product'
+} from "typeorm";
+import { Product } from "./Product";
 // BURAYA USER TABLOSU İMPORTLANACAK
 
 @Entity()
 export class Rating {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @ManyToOne(() => Product, (product) => product.userReviews)
-  product: Product
+  product: Product;
 
   //@ManyToOne(() => Product, (product) => product.userRatings)
-  userRating: number
+  userRating: number;
 
   //@ManyToOne(() => Product, (product) => product.userReviews)
-  userReview: string
+  userReview: string;
 
   @CreateDateColumn()
-  createdAt: Timestamp
+  createdAt: Timestamp;
 
   @UpdateDateColumn()
-  lastModifiedAt: Timestamp
+  lastModifiedAt: Timestamp;
 }
