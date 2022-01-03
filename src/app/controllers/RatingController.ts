@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateRatingDto } from "../models/Rating";
+import { CreateRatingDto, UpdateRatingDto } from "../models/Rating";
 import { RatingService } from "../services/RatingService";
 
 class RatingController {
@@ -31,6 +31,53 @@ class RatingController {
 
     const newRating = await ratingService.createRating(ratingDto);
     res.status(201).json(newRating);
+  }
+
+  public async updateRating(req: Request, res: Response) {
+    const ratingService = new RatingService();
+    const ratingDto: UpdateRatingDto = req.body;
+    if (!ratingDto.productId) {
+      res.status(400).json({ message: "You need to specify productId" });
+      return;
+    }
+    if (!ratingDto.userRating) {
+      res.status(400).json({ message: "You need to specify rating" });
+      return;
+    }
+    if (!ratingDto.userReview) {
+      res.status(400).json({ message: "You need to specify review" });
+      return;
+    }
+
+    const updatedRating = await ratingService.updateRating(
+      ratingDto.productId,
+      ratingDto
+    );
+    res.json(updatedRating);
+  }
+
+  public async deleteRating(req: Request, res: Response) {
+    const ratingService = new RatingService();
+    const productId = req.params.productId as unknown as number;
+    if (!productId) {
+      res.status(400).json({ message: "You need to specify productId" });
+      return;
+    }
+
+    const deletedRating = await ratingService.deleteRating(productId);
+    res.json(deletedRating);
+  }
+
+  public async getRatingById(req: Request, res: Response) {
+    const ratingService = new RatingService();
+    const ratingId = req.params.ratingId as unknown as number;
+    if (!ratingId) {
+      res.status(400).json({ message: "There is no rating with that id" });
+      return;
+    }
+
+    const rating = await ratingService.getRatingById(ratingId);
+    res.json(rating);
   }
 }
 

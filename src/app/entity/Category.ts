@@ -7,26 +7,26 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
-} from 'typeorm'
+} from "typeorm";
 
 @Entity()
 export class Category {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  categoryName: string
+  categoryName: string;
 
   @ManyToMany((type) => Category, (category) => category.id, {
     cascade: true,
-    onDelete: 'CASCADE'
+    onDelete: "CASCADE",
   })
   @JoinTable()
-  parents: Category[]
+  parents: Category[];
 
   @CreateDateColumn()
-  createdAt: Timestamp
+  createdAt: Timestamp;
 
   @UpdateDateColumn()
-  lastModifiedAt: Timestamp
+  lastModifiedAt: Timestamp;
 }

@@ -32,7 +32,13 @@ class Routes {
       .route("/api/v1/ratings")
       .get(this.ratingController.getRatings)
       .post(this.ratingController.createRating);
-    // TODO: implement middleware to routes
+
+    app
+      .route("/api/v1/ratings/:id")
+      .get(this.ratingController.getRatingById)
+      .put(this.ratingController.updateRating)
+      .delete(this.ratingController.deleteRating);
+
     app
       .route("/api/v1/products")
       /**

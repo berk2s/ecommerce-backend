@@ -1,7 +1,7 @@
 import { getManager } from "typeorm";
 import { Product } from "../entity/Product";
 import { Rating } from "../entity/Rating";
-import { RatingDto } from "../models/Rating";
+import { CreateRatingDto, RatingDto, UpdateRatingDto } from "../models/Rating";
 
 class RatingService {
   constructor() {}
@@ -19,6 +19,7 @@ class RatingService {
       let productId = rating.product.id;
 
       const ratingDto: RatingDto = {
+        id: rating.id,
         productId,
         // Dto dan gelen userRating
         userRating: rating.userRating,
@@ -29,7 +30,7 @@ class RatingService {
     return ratingsDto;
   }
 
-  public async createRating(ratingDto: RatingDto) {
+  public async createRating(ratingDto: CreateRatingDto) {
     const manager = getManager();
 
     const rating = new Rating();
@@ -40,6 +41,42 @@ class RatingService {
     const savedRating = await manager.save(rating);
 
     return savedRating;
+  }
+
+  public async updateRating(productId: number, ratingDto: UpdateRatingDto) {
+    const manager = getManager();
+
+    const rating = await manager.findOne(Rating, productId);
+
+    if (rating) {
+      rating.userRating = ratingDto.userRating;
+      rating.userReview = ratingDto.userReview;
+      rating.product = await manager.findOne(Product, ratingDto.productId);
+
+      await manager.save(rating);
+    }
+
+    return rating;
+  }
+
+  public async deleteRating(productId: number) {
+    const manager = getManager();
+
+    const rating = await manager.findOne(Rating, productId);
+
+    if (rating) {
+      await manager.remove(rating);
+    }
+
+    return rating;
+  }
+
+  public async getRatingById(ratingId: number) {
+    const manager = getManager();
+
+    const rating = await manager.findOne(Rating, ratingId);
+
+    return rating;
   }
 }
 
