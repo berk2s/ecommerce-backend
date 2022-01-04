@@ -32,17 +32,20 @@ class ProductService {
     return savedProduct;
   }
 
-  public async getProducts(searchTerm?: string, sort?: Sort) {
+  public async getProducts(searchTerm?: string, sort?: Sort, page?: number) {
     const manager = getManager();
-    // if (searchTerm) {
-    //   const products = await manager.getRepository(Product).find({
-    //     productName: Like(`${searchTerm}%`),
-    //   });
-    //   return products;
-    // } else {
-    //   const products = await manager.find(Product);
-    //   return products;
-    // }
+    const pageNumber = parseInt(page as any) || 1;
+    const PER_PAGE = 3;
+
+    if (page) {
+      const products = await manager
+        .createQueryBuilder(Product, "product")
+        .skip(PER_PAGE * (pageNumber - 1))
+        .take(PER_PAGE)
+        .getMany();
+      return products;
+    }
+
     if (searchTerm || sort) {
       const searchProducts = await getManager()
         .createQueryBuilder(Product, "product")

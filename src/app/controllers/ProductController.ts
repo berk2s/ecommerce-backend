@@ -29,26 +29,19 @@ class ProductController {
   public async getProducts(req: Request, res: Response) {
     const productService = new ProductService();
     const searchTerm = req.query.search;
+    const sort = req.query.sort;
+    const page = req.query.page;
 
     const products = await productService.getProducts(
       searchTerm as any,
-      req.query.sort as any
+      sort as any,
+      page as any
     );
 
     if (products.length === 0) {
       res.status(404).json({ message: "There are no products" });
       return;
     }
-
-    // /** Searching for a specific product, böyle yapmak yanlış çünkü büyük bir db de patlar. Service de filter yapmak daha mantıklı */
-    // if (req.query.search) {
-    //   const searchTerm = req.query.search as string;
-    //   const filteredProducts = products.filter((product) =>
-    //     product.productName.includes(searchTerm)
-    //   );
-    //   res.json(filteredProducts);
-    //   return;
-    // }
 
     res.json(products);
   }
