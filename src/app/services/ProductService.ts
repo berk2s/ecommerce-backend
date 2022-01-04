@@ -1,4 +1,4 @@
-import { getManager } from "typeorm";
+import { getManager, Like } from "typeorm";
 import { Category } from "../entity/Category";
 import { Currency } from "../entity/Currency";
 import { Price } from "../entity/Price";
@@ -31,10 +31,26 @@ class ProductService {
     return savedProduct;
   }
 
-  public async getProducts() {
+  public async getProducts(searchTerm?: string) {
     const manager = getManager();
-    const products = await manager.find(Product);
-    return products;
+    if (searchTerm) {
+      const products = await manager.getRepository(Product).find({
+        productName: Like(`${searchTerm}%`),
+      });
+      return products;
+    } else {
+      const products = await manager.find(Product);
+      return products;
+    }
+
+    // const searchProducts = await manager
+    //   .createQueryBuilder()
+    //   .select()
+    //   .from(Product, "product")
+    //   .where("product.productName LIKE :productName", {
+    //     productName: `${searchTerm}`,
+    //   })
+    //   .getMany();
   }
 
   public async getProduct(id: number) {
