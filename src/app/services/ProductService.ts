@@ -1,9 +1,10 @@
-import { getManager, Like } from "typeorm";
+import { getManager, getRepository, Like } from "typeorm";
 import { Category } from "../entity/Category";
 import { Currency } from "../entity/Currency";
 import { Price } from "../entity/Price";
 import { Product } from "../entity/Product";
 import { CreateProductDto, UpdateProductDto } from "../models/Product";
+import { Sort } from "../utilities/types";
 
 class ProductService {
   constructor() {}
@@ -31,26 +32,31 @@ class ProductService {
     return savedProduct;
   }
 
-  public async getProducts(searchTerm?: string) {
+  public async getProducts(searchTerm?: string, sort?: Sort) {
     const manager = getManager();
-    if (searchTerm) {
-      const products = await manager.getRepository(Product).find({
-        productName: Like(`${searchTerm}%`),
-      });
-      return products;
+    // if (searchTerm) {
+    //   const products = await manager.getRepository(Product).find({
+    //     productName: Like(`${searchTerm}%`),
+    //   });
+    //   return products;
+    // } else {
+    //   const products = await manager.find(Product);
+    //   return products;
+    // }
+    if (searchTerm || sort) {
+      const searchProducts = await getManager()
+        .createQueryBuilder(Product, "product")
+        .where("product.productName LIKE :productName", {
+          productName: `${searchTerm}%`,
+        })
+        .orderBy("product.productName", sort)
+        .getMany();
+
+      return searchProducts;
     } else {
       const products = await manager.find(Product);
       return products;
     }
-
-    // const searchProducts = await manager
-    //   .createQueryBuilder()
-    //   .select()
-    //   .from(Product, "product")
-    //   .where("product.productName LIKE :productName", {
-    //     productName: `${searchTerm}`,
-    //   })
-    //   .getMany();
   }
 
   public async getProduct(id: number) {

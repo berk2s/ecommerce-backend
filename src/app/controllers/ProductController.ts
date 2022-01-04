@@ -30,7 +30,10 @@ class ProductController {
     const productService = new ProductService();
     const searchTerm = req.query.search;
 
-    const products = await productService.getProducts(searchTerm as any);
+    const products = await productService.getProducts(
+      searchTerm as any,
+      req.query.sort as any
+    );
 
     if (products.length === 0) {
       res.status(404).json({ message: "There are no products" });
