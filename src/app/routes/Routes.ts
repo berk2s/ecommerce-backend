@@ -5,6 +5,8 @@ import { PriceController } from "../controllers/PriceController";
 import { ProductController } from "../controllers/ProductController";
 import { RatingController } from "../controllers/RatingController";
 import { tokenMiddleware } from "../middlewares/token-middleware";
+import { PropertyController } from "../controllers/PropertyController";
+
 
 class Routes {
   private productController: ProductController;
@@ -12,6 +14,7 @@ class Routes {
   private currencyController: CurrencyController;
   private priceController: PriceController;
   private ratingController: RatingController;
+  private propertyController: PropertyController
 
   constructor() {
     this.productController = new ProductController();
@@ -19,6 +22,7 @@ class Routes {
     this.currencyController = new CurrencyController();
     this.priceController = new PriceController();
     this.ratingController = new RatingController();
+    this.propertyController = new PropertyController();
   }
 
   public routes(app: Application): void {
@@ -27,6 +31,17 @@ class Routes {
         message: "GET request successfully.",
       });
     });
+
+    app
+      .route("/api/v1/properties")
+      .get(this.propertyController.getProperties)
+      .post(this.propertyController.createProperty);
+
+    app
+      .route("/api/v1/properties/:id")
+      .get(this.propertyController.getPropertyById)
+      .put(this.propertyController.updateProperty)
+      .delete(this.propertyController.deleteProperty);
 
     app
       .route("/api/v1/ratings")

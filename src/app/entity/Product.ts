@@ -12,6 +12,7 @@ import {
 import { Category } from "./Category";
 import { Price } from "./Price";
 import { Rating } from "./Rating";
+import { Property } from "./Property";
 
 @Entity()
 export class Product {
@@ -20,6 +21,10 @@ export class Product {
 
   @Column()
   productName: string;
+
+  @ManyToMany(() => Property, property => property.id)
+  // @JoinTable()
+  properties: Property[];
 
   @ManyToMany(() => Category)
   @JoinTable()
