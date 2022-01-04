@@ -45,13 +45,171 @@ class Routes {
 
     app
       .route("/api/v1/ratings")
+      /**
+       * @swagger
+       * /api/v1/ratings:
+       *   get:
+       *     summary: Retrieve a list of ratings
+       *     description: Retrieve a list of ratings.
+       *     tags:
+       *      - Ratings
+       *     responses:
+       *       200:
+       *         description: A list of ratings.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: array
+       *                   items:
+       *                     type: object
+       *                     properties:
+       *                       productId:
+       *                         type: integer
+       *                         description: The product ID.
+       *                         example: 1
+       *                       userRating:
+       *                         type: integer
+       *                         description: The rating number.
+       *                         example: 5
+       *                       userReview:
+       *                        type: string
+       *                        description: The userReview.
+       *                        example: Amazing.
+       *
+       */
       .get(this.ratingController.getRatings)
+      /**
+       * @swagger
+       * /api/v1/ratings:
+       *   post:
+       *     summary: Create a Rating
+       *     security:
+       *       - bearerAuth: []
+       *     tags: [Ratings]
+       *     responses:
+       *       201:
+       *         description: Rating created successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               productId:
+       *                 type: integer
+       *                 description: The productId.
+       *                 example: 2
+       *               userRating:
+       *                 type: integer
+       *                 description: The userRating.
+       *                 example: 5
+       *               userReview:
+       *                 type: string
+       *                 description: The products's review.
+       *                 example: Amazing.
+       */
       .post(this.ratingController.createRating);
 
     app
       .route("/api/v1/ratings/:id")
+      /**
+       * @swagger
+       * /api/v1/ratings/{id}:
+       *   get:
+       *     summary: Retrieve a single rating.
+       *     description: Retrieve a single rating
+       *     tags:
+       *      - Ratings
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: A single rating.
+       *         content:
+       *           application/json:
+       *             schema:
+       *               type: object
+       *               properties:
+       *                 response:
+       *                   type: object
+       *                   properties:
+       *                     id:
+       *                       type: integer
+       *                       description: The rating ID.
+       *                       example: 0
+       *                     userRating:
+       *                       type: integer
+       *                       description: The userRating.
+       *                       example: 5
+       *                     userReview:
+       *                       type: string
+       *                       description: The userReview.
+       *                       example: Amazing.
+       */
       .get(this.ratingController.getRatingById)
+      /**
+       * @swagger
+       * /api/v1/ratings/{id}:
+       *   put:
+       *     summary: Update a Rating
+       *     security:
+       *      - bearerAuth: []
+       *     tags:
+       *      - Ratings
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       200:
+       *         description: Rating updated successfully
+       *     requestBody:
+       *       required: true
+       *       content:
+       *         application/json:
+       *           schema:
+       *             type: object
+       *             properties:
+       *               productId:
+       *                 type: string
+       *                 description: The productId.
+       *                 example: 1
+       *               userRating:
+       *                 type: integer
+       *                 description: The userRating.
+       *                 example: 5
+       *               userReview:
+       *                 type: string
+       *                 description: The userReview.
+       *                 example: Amazing.
+       *
+       */
       .put(this.ratingController.updateRating)
+
+      /**
+       * @swagger
+       * /api/v1/ratings/{id}:
+       *   delete:
+       *     summary: Delete a single rating.
+       *     description: Delete a single rating
+       *     security:
+       *       - bearerAuth: []
+       *     tags:
+       *      - Ratings
+       *     parameters:
+       *       - in: path
+       *         name: id
+       *         required: true
+       *     responses:
+       *       204:
+       *        description: Rating deleted successfully
+       */
       .delete(this.ratingController.deleteRating);
 
     app
@@ -61,8 +219,9 @@ class Routes {
        * /api/v1/products:
        *   post:
        *     summary: Create a Product
-       *     tags:
-       *      - Products
+       *     security:
+       *       - bearerAuth: []
+       *     tags: [Products]
        *     responses:
        *       201:
        *         description: Product created successfully
@@ -81,6 +240,23 @@ class Routes {
        *                 type: array
        *                 description: category id
        *                 example: [1,2]
+       *               description:
+       *                 type: string
+       *                 description: The products's description.
+       *                 example: Arçelik is a great product.
+       *               status:
+       *                 type: string
+       *                 description: The products's status.
+       *                 example: Available
+       *               price:
+       *                 type: array
+       *                 description: The products's price array.
+       *                 example: [{"id": 1, "price": 50}]
+       *               userRating:
+       *                 type: array
+       *                 description: The userRating array.
+       *                 example: [{"id": 1, "userRating": 5, "userReview": "Wow"}]
+       *
        */
       .post(this.productController.saveProduct)
 
@@ -92,6 +268,19 @@ class Routes {
        *     description: Retrieve a list of products.
        *     tags:
        *      - Products
+       *     parameters:
+       *      - in: query
+       *        name: search
+       *        required: false
+       *        description: Search products by productName
+       *      - in: query
+       *        name: sort
+       *        required: false
+       *        description: ASC or DESC
+       *      - in: query
+       *        name: page
+       *        required: false
+       *        description: Page number
        *     responses:
        *       200:
        *         description: A list of products.
@@ -167,7 +356,6 @@ class Routes {
        *                       description: The product status.
        *                       example: Available
        */
-
       .get(this.productController.getProduct)
 
       /**
@@ -176,6 +364,8 @@ class Routes {
        *   delete:
        *     summary: Delete a single product.
        *     description: Delete a single product
+       *     security:
+       *       - bearerAuth: []
        *     tags:
        *      - Products
        *     parameters:
@@ -193,6 +383,8 @@ class Routes {
        * /api/v1/products/{id}:
        *   put:
        *     summary: Update a Product
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Products
        *     parameters:
@@ -223,6 +415,8 @@ class Routes {
        * /api/v1/categories:
        *   post:
        *     summary: Create a Category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Categories
        *     responses:
@@ -331,6 +525,8 @@ class Routes {
        *   delete:
        *     summary: Delete a single category.
        *     description: Delete a single category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Categories
        *     parameters:
@@ -347,6 +543,8 @@ class Routes {
        * /api/v1/categories/{id}:
        *   put:
        *     summary: Update a Category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Categories
        *     parameters:
@@ -414,11 +612,13 @@ class Routes {
        * /api/v1/currencies:
        *   post:
        *     summary: Create a Currency
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Currencies
        *     responses:
        *       201:
-       *         description: Currency created successfully
+       *         description: Currency created successfully,
        *     requestBody:
        *       required: true
        *       content:
@@ -482,6 +682,8 @@ class Routes {
        *   delete:
        *     summary: Currency a single category.
        *     description: Currency a single category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Currencies
        *     parameters:
@@ -499,6 +701,8 @@ class Routes {
        * /api/v1/currencies/{id}:
        *   put:
        *     summary: Update a Currency
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Currencies
        *     parameters:
@@ -566,11 +770,14 @@ class Routes {
        * /api/v1/prices:
        *   post:
        *     summary: Create a Price
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Prices
        *     responses:
        *       201:
        *         description: Price created successfully
+       *
        *     requestBody:
        *       required: true
        *       content:
@@ -600,6 +807,8 @@ class Routes {
        * /api/v1/prices/{id}:
        *   put:
        *     summary: Update a Price
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Prices
        *     parameters:
@@ -636,6 +845,8 @@ class Routes {
        *   delete:
        *     summary: Delete price.
        *     description: Delete price
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Prices
        *     parameters:

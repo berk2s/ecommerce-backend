@@ -45,12 +45,6 @@ export class Product {
   })
   userRating: number[];
 
-  @OneToMany(() => Rating, (rating) => rating.product, {
-    cascade: ["insert"],
-    onDelete: "CASCADE",
-  })
-  userReviews: string[];
-
   // @OneToMany(() => Rating, (rating) => rating.product, {
   //   cascade: ["insert"],
   // })

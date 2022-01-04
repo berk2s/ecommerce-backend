@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage } from "http";
 import * as jwt from "jsonwebtoken";
 import { API } from "../utilities/api-endpoints";
 import { RouteScope, scopes } from "../utilities/scopes";
@@ -42,25 +42,28 @@ export const tokenMiddleware: NextHandleFunction = (
       res.sendStatus(401);
       return;
     }
-    
+
     const method = req.method;
     let url = req.url.split(API.API_PREFIX)[1];
 
-    if(url.split('/').length > 2) {    
-      url = url.split('/')[1];
-    }    
+    if (url.split("/").length > 2) {
+      url = url.split("/")[1];
+    }
 
     const scopeOfUrl: RouteScope = scopes.find(
       (scope) => scope.url === url && scope.method === method
     );
 
     const scopesOfUser = [];
-    
-    payload.scopes.trim().split(" ").forEach(scope => {
-      scopesOfUser.push(scope)
-    })
 
-    if (!scopeOfUrl.scopes.some(scope => scopesOfUser.includes(scope))) {
+    payload.scopes
+      .trim()
+      .split(" ")
+      .forEach((scope) => {
+        scopesOfUser.push(scope);
+      });
+
+    if (!scopeOfUrl.scopes.some((scope) => scopesOfUser.includes(scope))) {
       res.sendStatus(403);
       return;
     }
@@ -70,4 +73,3 @@ export const tokenMiddleware: NextHandleFunction = (
 function API_PREFIX(API_PREFIX: any): any {
   throw new Error("Function not implemented.");
 }
-

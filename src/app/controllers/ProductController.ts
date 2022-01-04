@@ -29,12 +29,10 @@ class ProductController {
   public async getProducts(req: Request, res: Response) {
     const productService = new ProductService();
     const searchTerm = req.query.search;
-    const sort = req.query.sort;
     const page = req.query.page;
 
     const products = await productService.getProducts(
       searchTerm as any,
-      sort as any,
       page as any
     );
 

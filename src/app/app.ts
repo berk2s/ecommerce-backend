@@ -12,15 +12,36 @@ import { errorHandler, notFound } from "./middlewares/error-middleware";
  */
 const swaggerOptions = {
   swaggerDefinition: {
-    openapi: "3.0.0",
+    openapi: "3.0.1",
     info: {
       title: "Rocket TEAM API",
       description: "Rocket TEAM API 🚀🚀🚀",
       contact: {
         name: "Rocket TEAM",
       },
-      servers: ["http://localhost:3000"],
+      servers: [
+        {
+          url: "http://localhost:3000",
+          description: "NodeJS Backend",
+        },
+      ],
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          in: "header",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    // Global security definitions
+    // security: [
+    //   {
+    //     bearerAuth: [],
+    //   },
+    // ],
   },
   apis: ["./src/app/routes/*.ts"],
 };

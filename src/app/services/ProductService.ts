@@ -1,9 +1,8 @@
-import { getManager, getRepository, Like } from "typeorm";
+import { getManager } from "typeorm";
 import { Category } from "../entity/Category";
-import { Currency } from "../entity/Currency";
-import { Price } from "../entity/Price";
 import { Product } from "../entity/Product";
 import { CreateProductDto, UpdateProductDto } from "../models/Product";
+import { generateProducts } from "../utilities/fakeData";
 import { Sort } from "../utilities/types";
 
 class ProductService {
@@ -32,32 +31,41 @@ class ProductService {
     return savedProduct;
   }
 
-  public async getProducts(searchTerm?: string, sort?: Sort, page?: number) {
+  public async getProducts(searchTerm?: string, page?: number) {
     const manager = getManager();
     const pageNumber = parseInt(page as any) || 1;
     const PER_PAGE = 3;
+    // // take 3 products
+    // // skip 3 6 9 12 products
+    // if (page) {
+    //   const products = await manager
+    //     .createQueryBuilder(Product, "product")
+    //     .skip(PER_PAGE * (pageNumber - 1))
+    //     .take(PER_PAGE)
+    //     .getMany();
+    //   return products;
+    // }
 
-    if (page) {
-      const products = await manager
-        .createQueryBuilder(Product, "product")
-        .skip(PER_PAGE * (pageNumber - 1))
-        .take(PER_PAGE)
-        .getMany();
-      return products;
-    }
-
-    if (searchTerm || sort) {
+    if (searchTerm) {
       const searchProducts = await getManager()
         .createQueryBuilder(Product, "product")
         .where("product.productName LIKE :productName", {
           productName: `${searchTerm}%`,
         })
-        .orderBy("product.productName", sort)
         .getMany();
 
       return searchProducts;
+    } else if (page) {
+      const paginationProducts = await manager
+        .createQueryBuilder(Product, "product")
+        .skip(PER_PAGE * (pageNumber - 1))
+        .take(PER_PAGE)
+        .getMany();
+      return paginationProducts;
     } else {
-      const products = await manager.find(Product);
+      const products = await manager.find(Product, {
+        relations: ["categories", "prices", "userRating"],
+      });
       return products;
     }
   }
