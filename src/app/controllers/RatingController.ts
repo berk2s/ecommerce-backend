@@ -36,6 +36,8 @@ class RatingController {
   public async updateRating(req: Request, res: Response) {
     const ratingService = new RatingService();
     const ratingDto: UpdateRatingDto = req.body;
+    const ratingId = req.params.id as unknown as number;
+
     if (!ratingDto.productId) {
       res.status(400).json({ message: "You need to specify productId" });
       return;
@@ -49,28 +51,25 @@ class RatingController {
       return;
     }
 
-    const updatedRating = await ratingService.updateRating(
-      ratingDto.productId,
-      ratingDto
-    );
+    const updatedRating = await ratingService.updateRating(ratingId, ratingDto);
     res.json(updatedRating);
   }
 
   public async deleteRating(req: Request, res: Response) {
     const ratingService = new RatingService();
-    const productId = req.params.productId as unknown as number;
-    if (!productId) {
-      res.status(400).json({ message: "You need to specify productId" });
+    const ratingId = req.params.id as unknown as number;
+    if (!ratingId) {
+      res.status(400).json({ message: "You need to specify ratingId" });
       return;
     }
 
-    const deletedRating = await ratingService.deleteRating(productId);
+    const deletedRating = await ratingService.deleteRating(ratingId);
     res.json(deletedRating);
   }
 
   public async getRatingById(req: Request, res: Response) {
     const ratingService = new RatingService();
-    const ratingId = req.params.ratingId as unknown as number;
+    const ratingId = req.params.id as unknown as number;
     if (!ratingId) {
       res.status(400).json({ message: "There is no rating with that id" });
       return;

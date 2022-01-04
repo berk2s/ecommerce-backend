@@ -43,10 +43,10 @@ class RatingService {
     return savedRating;
   }
 
-  public async updateRating(productId: number, ratingDto: UpdateRatingDto) {
+  public async updateRating(ratingId: number, ratingDto: UpdateRatingDto) {
     const manager = getManager();
 
-    const rating = await manager.findOne(Rating, productId);
+    const rating = await manager.findOne(Rating, ratingId);
 
     if (rating) {
       rating.userRating = ratingDto.userRating;
@@ -59,10 +59,10 @@ class RatingService {
     return rating;
   }
 
-  public async deleteRating(productId: number) {
+  public async deleteRating(ratingId: number) {
     const manager = getManager();
 
-    const rating = await manager.findOne(Rating, productId);
+    const rating = await manager.findOne(Rating, ratingId);
 
     if (rating) {
       await manager.remove(rating);
