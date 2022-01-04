@@ -64,7 +64,13 @@ class RatingController {
     }
 
     const deletedRating = await ratingService.deleteRating(ratingId);
-    res.json(deletedRating);
+    if (!deletedRating) {
+      res
+        .status(404)
+        .json({ message: "There is no rating with that id mate." });
+      return;
+    }
+    res.status(204).json({ message: "Rating deleted" });
   }
 
   public async getRatingById(req: Request, res: Response) {
