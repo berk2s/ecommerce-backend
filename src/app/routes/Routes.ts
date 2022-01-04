@@ -46,8 +46,9 @@ class Routes {
        * /api/v1/products:
        *   post:
        *     summary: Create a Product
-       *     tags:
-       *      - Products
+       *     security:
+       *       - bearerAuth: []
+       *     tags: [Products]
        *     responses:
        *       201:
        *         description: Product created successfully
@@ -66,6 +67,10 @@ class Routes {
        *                 type: array
        *                 description: category id
        *                 example: [1,2]
+       *               description:
+       *                 type: string
+       *                 description: The products's description.
+       *                 example: Arçelik is a great product.
        */
       .post(this.productController.saveProduct)
 
@@ -161,6 +166,8 @@ class Routes {
        *   delete:
        *     summary: Delete a single product.
        *     description: Delete a single product
+       *     security:
+       *       - bearerAuth: []
        *     tags:
        *      - Products
        *     parameters:
@@ -178,6 +185,8 @@ class Routes {
        * /api/v1/products/{id}:
        *   put:
        *     summary: Update a Product
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Products
        *     parameters:
@@ -208,6 +217,8 @@ class Routes {
        * /api/v1/categories:
        *   post:
        *     summary: Create a Category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Categories
        *     responses:
@@ -316,6 +327,8 @@ class Routes {
        *   delete:
        *     summary: Delete a single category.
        *     description: Delete a single category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Categories
        *     parameters:
@@ -332,6 +345,8 @@ class Routes {
        * /api/v1/categories/{id}:
        *   put:
        *     summary: Update a Category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Categories
        *     parameters:
@@ -399,11 +414,13 @@ class Routes {
        * /api/v1/currencies:
        *   post:
        *     summary: Create a Currency
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Currencies
        *     responses:
        *       201:
-       *         description: Currency created successfully
+       *         description: Currency created successfully,
        *     requestBody:
        *       required: true
        *       content:
@@ -467,6 +484,8 @@ class Routes {
        *   delete:
        *     summary: Currency a single category.
        *     description: Currency a single category
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Currencies
        *     parameters:
@@ -484,6 +503,8 @@ class Routes {
        * /api/v1/currencies/{id}:
        *   put:
        *     summary: Update a Currency
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Currencies
        *     parameters:
@@ -551,11 +572,14 @@ class Routes {
        * /api/v1/prices:
        *   post:
        *     summary: Create a Price
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Prices
        *     responses:
        *       201:
        *         description: Price created successfully
+       *
        *     requestBody:
        *       required: true
        *       content:
@@ -585,6 +609,8 @@ class Routes {
        * /api/v1/prices/{id}:
        *   put:
        *     summary: Update a Price
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Prices
        *     parameters:
@@ -621,6 +647,8 @@ class Routes {
        *   delete:
        *     summary: Delete price.
        *     description: Delete price
+       *     security:
+       *      - bearerAuth: []
        *     tags:
        *      - Prices
        *     parameters:

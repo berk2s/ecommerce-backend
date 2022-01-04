@@ -2,6 +2,7 @@ import { getManager } from "typeorm";
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
 import { CreateProductDto, UpdateProductDto } from "../models/Product";
+import { generateProducts } from "../utilities/fakeData";
 import { Sort } from "../utilities/types";
 
 class ProductService {
@@ -34,7 +35,8 @@ class ProductService {
     const manager = getManager();
     const pageNumber = parseInt(page as any) || 1;
     const PER_PAGE = 3;
-
+    // take 3 products
+    // skip 3 6 9 12 products
     if (page) {
       const products = await manager
         .createQueryBuilder(Product, "product")
@@ -60,14 +62,6 @@ class ProductService {
       });
       return products;
     }
-    // for (let i = 0; i < 50; i++) {
-    //   await manager.save(Product, {
-    //     id: i,
-    //     productName: faker.commerce.productName(),
-    //     description: faker.lorem.paragraph(),
-    //     status: "active",
-    //   });
-    // }
   }
 
   public async getProduct(id: number) {
