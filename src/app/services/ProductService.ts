@@ -1,7 +1,5 @@
-import { getManager, getRepository, Like } from "typeorm";
+import { getManager } from "typeorm";
 import { Category } from "../entity/Category";
-import { Currency } from "../entity/Currency";
-import { Price } from "../entity/Price";
 import { Product } from "../entity/Product";
 import { CreateProductDto, UpdateProductDto } from "../models/Product";
 import { Sort } from "../utilities/types";
@@ -57,9 +55,19 @@ class ProductService {
 
       return searchProducts;
     } else {
-      const products = await manager.find(Product);
+      const products = await manager.find(Product, {
+        relations: ["categories", "prices", "userRating"],
+      });
       return products;
     }
+    // for (let i = 0; i < 50; i++) {
+    //   await manager.save(Product, {
+    //     id: i,
+    //     productName: faker.commerce.productName(),
+    //     description: faker.lorem.paragraph(),
+    //     status: "active",
+    //   });
+    // }
   }
 
   public async getProduct(id: number) {

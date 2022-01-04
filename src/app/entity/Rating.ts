@@ -7,7 +7,6 @@ import {
   Timestamp,
   UpdateDateColumn,
 } from "typeorm";
-import { Currency } from "./Currency";
 import { Product } from "./Product";
 
 @Entity()
@@ -21,9 +20,6 @@ export class Rating {
   @Column()
   userReview: string;
 
-  @ManyToOne(() => Product, (product) => product.userReviews, {
-    cascade: true,
-  })
   @ManyToOne(() => Product, (product) => product.userRating, {
     cascade: true,
   })
