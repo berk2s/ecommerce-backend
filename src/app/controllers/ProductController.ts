@@ -81,19 +81,6 @@ class ProductController {
     const updateProductDto: UpdateProductDto = req.body;
     const productId = req.params.id as unknown as number;
 
-    if (!updateProductDto.productName) {
-      res.status(400).json({ message: "You need to specify productName" });
-      return;
-    }
-    if (!updateProductDto.description) {
-      res.status(400).json({ message: "You need to specify description" });
-      return;
-    }
-    if (!updateProductDto.categories) {
-      res.status(400).json({ message: "You need to specify categories" });
-      return;
-    }
-
     const updatedProduct = await productService.updateProduct(
       productId,
       updateProductDto

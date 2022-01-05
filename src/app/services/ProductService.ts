@@ -94,6 +94,7 @@ class ProductService {
     productToUpdate.productName = productCategoryDto.productName;
     productToUpdate.description = productCategoryDto.description;
     productToUpdate.status = productCategoryDto.status;
+    productToUpdate.categories = [productCategoryDto.categories] as any;
     const updatedProduct = await manager.save(productToUpdate);
     return updatedProduct;
   }
