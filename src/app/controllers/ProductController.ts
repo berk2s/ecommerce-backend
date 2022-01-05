@@ -89,6 +89,10 @@ class ProductController {
       res.status(400).json({ message: "You need to specify description" });
       return;
     }
+    if (!updateProductDto.categories) {
+      res.status(400).json({ message: "You need to specify categories" });
+      return;
+    }
 
     const updatedProduct = await productService.updateProduct(
       productId,
