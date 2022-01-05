@@ -8,7 +8,8 @@ export interface CreateProductDto {
 }
 
 export interface UpdateProductDto {
-  productName: string;
-  description: string;
+  productName?: string;
+  description?: string;
+  categories?: number[];
   status?: string;
 }
