@@ -259,10 +259,6 @@ class Routes {
        *        required: false
        *        description: Search products by productName
        *      - in: query
-       *        name: sort
-       *        required: false
-       *        description: ASC or DESC
-       *      - in: query
        *        name: page
        *        required: false
        *        description: Page number
