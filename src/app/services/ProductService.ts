@@ -94,7 +94,18 @@ class ProductService {
     productToUpdate.productName = productCategoryDto.productName;
     productToUpdate.description = productCategoryDto.description;
     productToUpdate.status = productCategoryDto.status;
-    productToUpdate.categories = [productCategoryDto.categories] as any;
+
+    if (
+      productCategoryDto.categories &&
+      Array.isArray(productCategoryDto.categories)
+    ) {
+      const categories = await manager.findByIds(
+        Category,
+        productCategoryDto.categories
+      );
+      productToUpdate.categories = categories;
+    }
+
     const updatedProduct = await manager.save(productToUpdate);
     return updatedProduct;
   }
