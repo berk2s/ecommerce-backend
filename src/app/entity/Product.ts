@@ -23,7 +23,7 @@ export class Product {
   productName: string;
 
   @ManyToMany(() => Property, (property) => property.id)
-  // @JoinTable()
+  @JoinTable()
   properties: Property[];
 
   // { onDelete: "SET NULL" } ??

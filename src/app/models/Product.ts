@@ -5,6 +5,7 @@ export interface CreateProductDto {
   status?: string;
   userRating?: number;
   userReviews?: string[];
+  properties?: number[];
 }
 
 export interface UpdateProductDto {
@@ -12,4 +13,5 @@ export interface UpdateProductDto {
   description?: string;
   categories?: number[];
   status?: string;
+  properties?: number[];
 }

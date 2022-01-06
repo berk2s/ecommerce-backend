@@ -1,6 +1,7 @@
 import { getManager } from "typeorm";
 import { Category } from "../entity/Category";
 import { Product } from "../entity/Product";
+import { Property } from "../entity/Property";
 import { CreateProductDto, UpdateProductDto } from "../models/Product";
 import { generateProducts } from "../utilities/fakeData";
 import { Sort } from "../utilities/types";
@@ -64,7 +65,7 @@ class ProductService {
       return paginationProducts;
     } else {
       const products = await manager.find(Product, {
-        relations: ["categories", "prices", "userRating"],
+        relations: ["categories", "prices", "userRating", "properties"],
       });
       return products;
     }
@@ -104,6 +105,17 @@ class ProductService {
         productCategoryDto.categories
       );
       productToUpdate.categories = categories;
+    }
+
+    if (
+      productCategoryDto.properties &&
+      Array.isArray(productCategoryDto.properties)
+    ) {
+      const properties = await manager.findByIds(
+        Property,
+        productCategoryDto.properties
+      );
+      productToUpdate.properties = properties;
     }
 
     const updatedProduct = await manager.save(productToUpdate);
