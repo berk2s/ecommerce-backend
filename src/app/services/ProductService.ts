@@ -4,6 +4,7 @@ import { Product } from "../entity/Product";
 import { Property } from "../entity/Property";
 import { CreateProductDto, UpdateProductDto } from "../models/Product";
 import { generateProducts } from "../utilities/fakeData";
+
 import { Sort } from "../utilities/types";
 
 class ProductService {
@@ -17,6 +18,7 @@ class ProductService {
     product.categories = [];
     product.description = createProductDto.description;
     product.status = createProductDto.status;
+    product.image = createProductDto.image;
 
     const categories = await manager.findByIds(
       Category,
@@ -35,7 +37,7 @@ class ProductService {
   public async getProducts(searchTerm?: string, page?: number, limit?: number) {
     const manager = getManager();
     const pageNumber = parseInt(page as any) || 1;
-    const limitNumber = parseInt(limit as any) || 10;
+    const limitNumber = parseInt(limit as any) || 3;
     const PER_PAGE = 3;
     // // take 3 products
     // // skip 3 6 9 12 products

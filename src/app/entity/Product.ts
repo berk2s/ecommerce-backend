@@ -31,6 +31,9 @@ export class Product {
   @JoinTable()
   categories: Category[];
 
+  @Column()
+  image: string;
+
   @OneToMany(() => Price, (price) => price.product)
   prices: Price[];
 

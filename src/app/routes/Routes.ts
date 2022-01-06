@@ -247,14 +247,18 @@ class Routes {
        *                 type: string
        *                 description: The products's status.
        *                 example: Available
-       *               price:
-       *                 type: array
-       *                 description: The products's price array.
-       *                 example: [{"id": 1, "price": 50}]
-       *               userRating:
-       *                 type: array
-       *                 description: The userRating array.
-       *                 example: [{"id": 1, "userRating": 5, "userReview": "Wow"}]
+       *               image:
+       *                 type: string
+       *                 description: The products's image.
+       *  https://res.cloudinary.com/djh0vlero/image/upload/v1641469350/assets/MSI2_ll5c68.jpg
+      //  *               price:
+      //  *                 type: array
+      //  *                 description: The products's price array.
+      //  *                 example: [{"id": 1, "price": 50}]
+      //  *               userRating:
+      //  *                 type: array
+      //  *                 description: The userRating array.
+      //  *                 example: [{"id": 1, "userRating": 5, "userReview": "Wow"}]
        *
        */
       .post(this.productController.saveProduct)
@@ -308,7 +312,11 @@ class Routes {
        *                       status:
        *                        type: string
        *                        description: The product status.
-       *                        example: Available
+       *                        example: available or unavailable
+       *                       image:
+       *                        type: string
+       *                        description: The product image.
+       *                        example: https://res.cloudinary.com/djh0vlero/image/upload/v1641469350/assets/MSI2_ll5c68.jpg
        *
        */
       .get(this.productController.getProducts);

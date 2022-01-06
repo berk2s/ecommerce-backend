@@ -38,10 +38,10 @@ class ProductController {
       limit as any
     );
 
-    if (products.length === 0) {
-      res.status(404).json({ message: "There are no products" });
-      return;
-    }
+    // if (products.length === 0) {
+    //   res.status(404).json({ message: "There are no products" });
+    //   return;
+    // }
 
     res.json(products);
   }

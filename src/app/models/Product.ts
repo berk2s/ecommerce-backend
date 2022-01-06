@@ -6,6 +6,7 @@ export interface CreateProductDto {
   userRating?: number;
   userReviews?: string[];
   properties?: number[];
+  image: string;
 }
 
 export interface UpdateProductDto {
@@ -14,4 +15,5 @@ export interface UpdateProductDto {
   categories?: number[];
   status?: string;
   properties?: number[];
+  image: string;
 }
