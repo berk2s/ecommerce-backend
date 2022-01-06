@@ -34,7 +34,10 @@ export class Product {
   @Column()
   image: string;
 
-  @OneToMany(() => Price, (price) => price.product)
+  @OneToMany(() => Price, (price) => price.product, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   prices: Price[];
 
   @Column({ nullable: true, type: "text" })
