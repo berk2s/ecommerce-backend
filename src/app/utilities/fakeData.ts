@@ -13,21 +13,34 @@ export async function generateProducts() {
       createdAt: new Date(),
       lastModifiedAt: new Date(),
       categories: [
-        {
-          id: i,
-          categoryName: faker.commerce.department(),
-          createdAt: new Date(),
-          lastModifiedAt: new Date(),
-        },
+        // {
+        //   id: i,
+        //   categoryName: faker.commerce.department(),
+        //   createdAt: new Date(),
+        //   lastModifiedAt: new Date(),
+        // },
       ],
       userRating: [],
+      properties: [
+        // {
+        //   id: i,
+        //   brand: "MSI",
+        //   color: faker.commerce.color(),
+        //   model: faker.commerce.productName(),
+        //   memory: faker.commerce.productMaterial(),
+        //   cpu: faker.commerce.productMaterial(),
+        //   graphicCard: faker.commerce.productMaterial(),
+        //   disk: faker.commerce.productMaterial(),
+        //   mass: faker.commerce.productMaterial(),
+        // },
+      ],
       prices: [
-        {
-          id: i,
-          price: faker.commerce.price(),
-          currencyId: i,
-          productId: i,
-        },
+        // {
+        //   id: i,
+        //   price: faker.commerce.price(),
+        //   currencyId: i,
+        //   productId: i,
+        // },
       ],
     });
   }
