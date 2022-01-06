@@ -6,6 +6,7 @@ import { TokenUtility } from "./utilities/TokenUtility";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import { errorHandler, notFound } from "./middlewares/error-middleware";
+import { cors } from "cors";
 
 /**
  * @description This is a config for swagger
@@ -59,6 +60,7 @@ class App {
 
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(cors());
 
     this._routes = new Routes();
     this._routes.routes(this.app);
