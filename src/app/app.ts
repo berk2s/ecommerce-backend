@@ -6,7 +6,7 @@ import { TokenUtility } from "./utilities/TokenUtility";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import { errorHandler, notFound } from "./middlewares/error-middleware";
-import { cors } from "cors";
+import cors from "cors";
 
 /**
  * @description This is a config for swagger
@@ -49,6 +49,11 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200,
+};
+
 class App {
   public app: express.Application;
   public _routes: Routes;
@@ -57,10 +62,10 @@ class App {
     // TokenUtility.initilaizePublicKey()
 
     this.app = express();
+    this.app.use(cors(corsOptions));
 
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(cors());
 
     this._routes = new Routes();
     this._routes.routes(this.app);
