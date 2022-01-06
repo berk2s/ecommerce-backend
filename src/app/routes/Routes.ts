@@ -7,14 +7,13 @@ import { RatingController } from "../controllers/RatingController";
 import { tokenMiddleware } from "../middlewares/token-middleware";
 import { PropertyController } from "../controllers/PropertyController";
 
-
 class Routes {
   private productController: ProductController;
   private categoryController: CategoryController;
   private currencyController: CurrencyController;
   private priceController: PriceController;
   private ratingController: RatingController;
-  private propertyController: PropertyController
+  private propertyController: PropertyController;
 
   constructor() {
     this.productController = new ProductController();
@@ -277,6 +276,10 @@ class Routes {
        *        name: page
        *        required: false
        *        description: Page number
+       *      - in: query
+       *       name: limit
+       *       required: false
+       *       description: Limit number of products
        *     responses:
        *       200:
        *         description: A list of products.

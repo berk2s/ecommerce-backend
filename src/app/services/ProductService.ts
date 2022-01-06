@@ -32,9 +32,10 @@ class ProductService {
     return savedProduct;
   }
 
-  public async getProducts(searchTerm?: string, page?: number) {
+  public async getProducts(searchTerm?: string, page?: number, limit?: number) {
     const manager = getManager();
     const pageNumber = parseInt(page as any) || 1;
+    const limitNumber = parseInt(limit as any) || 10;
     const PER_PAGE = 3;
     // // take 3 products
     // // skip 3 6 9 12 products
@@ -63,12 +64,19 @@ class ProductService {
         .take(PER_PAGE)
         .getMany();
       return paginationProducts;
+    } else if (limit) {
+      const limitedProducts = await manager
+        .createQueryBuilder(Product, "product")
+        .take(limitNumber)
+        .getMany();
+      return limitedProducts;
     } else {
       const products = await manager.find(Product, {
         relations: ["categories", "prices", "userRating", "properties"],
       });
       return products;
     }
+    // await generateProducts();
   }
 
   public async getProduct(id: number) {

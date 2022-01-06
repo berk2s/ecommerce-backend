@@ -30,10 +30,12 @@ class ProductController {
     const productService = new ProductService();
     const searchTerm = req.query.search;
     const page = req.query.page;
+    const limit = req.query.limit;
 
     const products = await productService.getProducts(
       searchTerm as any,
-      page as any
+      page as any,
+      limit as any
     );
 
     if (products.length === 0) {
