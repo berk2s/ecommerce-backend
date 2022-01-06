@@ -22,10 +22,11 @@ export class Product {
   @Column()
   productName: string;
 
-  @ManyToMany(() => Property, property => property.id)
+  @ManyToMany(() => Property, (property) => property.id)
   // @JoinTable()
   properties: Property[];
 
+  // { onDelete: "SET NULL" } ??
   @ManyToMany(() => Category)
   @JoinTable()
   categories: Category[];
