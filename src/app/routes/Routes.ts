@@ -277,9 +277,9 @@ class Routes {
        *        required: false
        *        description: Page number
        *      - in: query
-       *       name: limit
-       *       required: false
-       *       description: Limit number of products
+       *        name: limit
+       *        required: false
+       *        description: Limit number of products
        *     responses:
        *       200:
        *         description: A list of products.
