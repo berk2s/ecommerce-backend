@@ -74,9 +74,9 @@ class Routes {
        *                         description: The rating number.
        *                         example: 5
        *                       userReview:
-       *                        type: string
-       *                        description: The userReview.
-       *                        example: Amazing.
+       *                         type: string
+       *                         description: The userReview.
+       *                         example: Amazing.
        *
        */
       .get(this.ratingController.getRatings)
@@ -250,15 +250,7 @@ class Routes {
        *               image:
        *                 type: string
        *                 description: The products's image.
-       *  https://res.cloudinary.com/djh0vlero/image/upload/v1641469350/assets/MSI2_ll5c68.jpg
-      //  *               price:
-      //  *                 type: array
-      //  *                 description: The products's price array.
-      //  *                 example: [{"id": 1, "price": 50}]
-      //  *               userRating:
-      //  *                 type: array
-      //  *                 description: The userRating array.
-      //  *                 example: [{"id": 1, "userRating": 5, "userReview": "Wow"}]
+       *                 example: https://res.cloudinary.com/djh0vlero/image/upload/v1641469350/assets/MSI2_ll5c68.jpg
        *
        */
       .post(this.productController.saveProduct)
@@ -306,17 +298,17 @@ class Routes {
        *                         description: The product's name.
        *                         example: Samsung Galaxy S10
        *                       description:
-       *                        type: string
-       *                        description: The product description.
-       *                        example: Samsung Galaxy S10 is a smartphone by Samsung.
+       *                         type: string
+       *                         description: The product description.
+       *                         example: Samsung Galaxy S10 is a smartphone by Samsung.
        *                       status:
-       *                        type: string
-       *                        description: The product status.
-       *                        example: available or unavailable
+       *                         type: string
+       *                         description: The product status.
+       *                         example: available or unavailable
        *                       image:
-       *                        type: string
-       *                        description: The product image.
-       *                        example: https://res.cloudinary.com/djh0vlero/image/upload/v1641469350/assets/MSI2_ll5c68.jpg
+       *                         type: string
+       *                         description: The product image.
+       *                         example: https://res.cloudinary.com/djh0vlero/image/upload/v1641469350/assets/MSI2_ll5c68.jpg
        *
        */
       .get(this.productController.getProducts);

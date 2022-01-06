@@ -39,16 +39,6 @@ class ProductService {
     const pageNumber = parseInt(page as any) || 1;
     const limitNumber = parseInt(limit as any) || 3;
     const PER_PAGE = 3;
-    // // take 3 products
-    // // skip 3 6 9 12 products
-    // if (page) {
-    //   const products = await manager
-    //     .createQueryBuilder(Product, "product")
-    //     .skip(PER_PAGE * (pageNumber - 1))
-    //     .take(PER_PAGE)
-    //     .getMany();
-    //   return products;
-    // }
 
     if (searchTerm) {
       const searchProducts = await getManager()
@@ -59,17 +49,19 @@ class ProductService {
         .getMany();
 
       return searchProducts;
-    } else if (page) {
+    }
+    if (page) {
       const paginationProducts = await manager
         .createQueryBuilder(Product, "product")
         .skip(PER_PAGE * (pageNumber - 1))
         .take(PER_PAGE)
         .getMany();
       return paginationProducts;
-    } else if (limit) {
+    }
+    if (limit) {
       const limitedProducts = await manager
         .createQueryBuilder(Product, "product")
-        .take(limitNumber)
+        .limit(limitNumber)
         .getMany();
       return limitedProducts;
     } else {

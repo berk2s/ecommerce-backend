@@ -37,7 +37,7 @@ export class Product {
   @OneToMany(() => Price, (price) => price.product)
   prices: Price[];
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "text" })
   description: string;
 
   @Column({ nullable: true })

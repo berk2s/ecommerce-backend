@@ -1,18 +1,18 @@
-import 'reflect-metadata'
+import "reflect-metadata";
 
-import app from './app/app'
-import { createConnection } from 'typeorm'
+import app from "./app/app";
+import { createConnection } from "typeorm";
 
-const PORT = 3000
+const PORT = 3000;
 
 createConnection()
   .then(() => {
-    console.log('Connection is successful')
+    console.log("Connection is successful");
   })
   .catch((err) => {
-    console.log('Something went wrong ', err)
-  })
+    console.log("Something went wrong ", err);
+  });
 
 app.listen(PORT, () => {
-  console.info('Server is available on http://localhost:' + PORT)
-})
+  console.info("Server is available on http://localhost:" + PORT);
+});
