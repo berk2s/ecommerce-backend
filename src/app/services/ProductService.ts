@@ -43,6 +43,10 @@ class ProductService {
     if (searchTerm) {
       const searchProducts = await getManager()
         .createQueryBuilder(Product, "product")
+        .leftJoinAndSelect("product.categories", "categories")
+        .leftJoinAndSelect("product.properties", "properties")
+        .leftJoinAndSelect("product.prices", "prices")
+        .leftJoinAndSelect("product.userRating", "userRating")
         .where("product.productName LIKE :productName", {
           productName: `${searchTerm}%`,
         })
@@ -53,6 +57,11 @@ class ProductService {
     if (page) {
       const paginationProducts = await manager
         .createQueryBuilder(Product, "product")
+        .leftJoinAndSelect("product.categories", "categories")
+        .leftJoinAndSelect("product.properties", "properties")
+        .leftJoinAndSelect("product.prices", "prices")
+        .leftJoinAndSelect("product.userRating", "userRating")
+
         .skip(PER_PAGE * (pageNumber - 1))
         .take(PER_PAGE)
         .getMany();
@@ -61,6 +70,10 @@ class ProductService {
     if (limit) {
       const limitedProducts = await manager
         .createQueryBuilder(Product, "product")
+        .leftJoinAndSelect("product.categories", "categories")
+        .leftJoinAndSelect("product.properties", "properties")
+        .leftJoinAndSelect("product.prices", "prices")
+        .leftJoinAndSelect("product.userRating", "userRating")
         .limit(limitNumber)
         .getMany();
       return limitedProducts;
