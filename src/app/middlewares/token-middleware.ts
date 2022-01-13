@@ -70,6 +70,3 @@ export const tokenMiddleware: NextHandleFunction = (
     next();
   });
 };
-function API_PREFIX(API_PREFIX: any): any {
-  throw new Error("Function not implemented.");
-}
